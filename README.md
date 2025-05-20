@@ -7,3 +7,4 @@ OOP - Klassen, Instanzen, methoden(privat, public), Klassen Variablen, Konstrukt
 NEU: 
 getesteter Code ( war länsgt überfällig ) 
 Jeder Node und jeder Parser ist eine eigene klasse mit einer extendeten BasePaser Klasse und eine ASTNode Klasse.
+Besseres Error Handling (auf wienerischer grant Art).
