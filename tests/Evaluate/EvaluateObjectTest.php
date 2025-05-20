@@ -344,16 +344,45 @@ class EvaluateObjectTest extends ParserTestCase
     {
         $inputClass = "klasse schuh{
   
-        privat hawara SICHA() {
-        oida.sag(5);
+        privat hawara SICHA(a) {
+        oida.sag(a);
          }
          
          öffentlich hawara HHH(){
-         this:SICHA();
+         this:SICHA(5);
          }
       }
       
         heast jo = neu schuh();
+        jo gibMa HHH();";
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $this->assertEquals('5', $codeBlockNode->evaluate($env));
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_class_variable_with_no_initialization()
+    {
+
+        $inputClass = "klasse kuh{
+         privat a;
+       
+         öffentlich hawara HHH(){
+         this:a = 5;
+         oida.sag(this:a);
+         }
+      }
+      
+        heast jo = neu kuh();
         jo gibMa HHH();";
 
         $env = new Environment();
