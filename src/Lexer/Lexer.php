@@ -1,0 +1,152 @@
+<?php
+
+namespace Oida\Lexer;
+
+class Lexer
+{
+    private string $input;
+    private array $tokens = [];
+
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    public function tokenize(): array
+    {
+        $patterns = array_merge(
+            $this->controlFlowTokens(),
+            $this->logicTokens(),
+            $this->databaseTokens(),
+            $this->classTokens(),
+            $this->operators(),
+            $this->syntaxTokens(),
+            $this->literalsAndValues(),
+            $this->generalTokens()
+        );
+
+        $this->lookForTokens($patterns);
+        return $this->tokens;
+    }
+
+    private function lookForTokens(array $patterns): void
+    {
+        $regex = '/' . implode('|', array_map(fn($p) => '(' . trim($p, '/') . ')', $patterns)) . '/';
+
+        preg_match_all($regex, $this->input, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            foreach ($patterns as $type => $pattern) {
+                if (preg_match('/^' . trim($pattern, '/') . '$/', $match[0])) {
+                    $value = $match[0];
+                    if ($type === 'T_STRING') {
+                        $value = trim($value, '"');
+                    }
+                    $this->tokens[] = [$type, $value];
+                    break;
+                }
+            }
+        }
+    }
+
+    private function generalTokens(): array
+    {
+        return [
+            'T_PRINT' => '/\boida\.sag\b/',
+            'T_LET' => '/\bheast\b/',
+            'T_METHOD' => '/\bhawara\b/',
+            'T_RETURN' => '/\bspeicher\b/',
+            'T_COMMENT' => '/\bkommentar\b/',
+            'T_IDENTIFIER' => '/[a-zA-Z_]\w*/',
+        ];
+    }
+
+    private function databaseTokens(): array
+    {
+        return [
+            'T_DB_CONNECT' => '/\bverbinde\b/',
+            'T_CREATE' => '/\berstell tabelle\b/',
+            'T_VARCHAR' => '/\bcharaktäre\b/',
+            'T_INT_DB' => '/\bzahl\b/',
+            'T_PRIMARY_KEY' => '/\bhauptschlüssel\b/',
+            'T_SELECT' => '/\bwähle\b/',
+            'T_INSERT' => '/\bschreib in\b/',
+            'T_VALUES' => '/\bwerte\b/',
+            'T_UPDATE' => '/\bupdate\b/',
+            'T_DELETE' => '/\blösche von\b/',
+            'T_WHERE' => '/\bwo\b/',
+            'T_QUERY_ACCESS' => '/\->/',
+            'T_FETCH' => '/\bholma\b/',
+        ];
+    }
+
+    private function controlFlowTokens(): array
+    {
+        return [
+            'T_IF' => '/\bwenn\b/',
+            'T_ELSE' => '/\bsonst\b/',
+            'T_FOR' => '\baufi\b',
+            'T_WHILE' => '/\bgeh weida\b/',
+            'T_FOREACH' => '/\bfiaOis\b/',
+            'T_AS' => '/\bals\b/',
+        ];
+    }
+
+    private function logicTokens(): array
+    {
+        return [
+            'T_TRUE' => '/\bbasst\b/',
+            'T_FALSE' => '/\bsichaned\b/',
+            'T_LOGICAL_AND' => '/\bund\b/',
+            'T_LOGICAL_OR' => '/\boda\b/',
+        ];
+    }
+
+    private function operators(): array
+    {
+        return [
+            'T_COMPARISON_OPERATOR' => '/\bgleich\b|\bisned\b|\bklanaglei\b|\b(gößerglei|größerglei)\b|\bklana\b|\bgrößer\b/',
+            'T_ARITHMETIC_OPERATOR' => '/(plusplus|minusminus|mal|dividier|plus|minus)/',
+            'T_ASSIGN' => '/\+=|-=|\*=|\/=|=/',
+            'T_FILTER_ARROW' => '/=>/',
+        ];
+    }
+
+    private function syntaxTokens(): array
+    {
+        return [
+            'T_COLON' => '/\:/',
+            'T_SEPARATOR' => '/\,/',
+            'T_DOT' => '/\./',
+            'T_OPENING_BRACKET' => '/\[/',
+            'T_CLOSING_BRACKET' => '/\]/',
+            'T_OPENING_BRACE' => '/\{/',
+            'T_CLOSING_BRACE' => '/\}/',
+            'T_OPENING_PARENTHESIS' => '/\(/',
+            'T_CLOSING_PARENTHESIS' => '/\)/',
+            'T_LINE_END' => '/;/',
+        ];
+    }
+
+    private function literalsAndValues(): array
+    {
+        return [
+            'T_NUMBER' => '/\d+/',
+            'T_STRING' => '/"(?:.*?)"/',
+        ];
+    }
+
+    private function classTokens():array
+    {
+        return [
+            'T_CLASS' => '/\bklasse\b/',
+            'T_NEW' => '/\bneu\b/',
+            'T_CLASS_ACCESS' => '/\bgibMa\b/',
+            'T_CLASS_PROPERTY_PUBLIC' => '/(asdasddadd|öffentlich)/',
+            'T_CLASS_PROPERTY_PRIVATE' => '/\bprivat\b/',
+            'T_THIS' => '/\bthis\b/',
+            'T_CONSTRUCTOR' => '/\bBauMeister\b/',
+            'T_CLASS_PROPERTY_ACCESS' => '/\:/',
+        ];
+    }
+}

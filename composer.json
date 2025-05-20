@@ -1,0 +1,15 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Oida\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.1"
+    }
+}
