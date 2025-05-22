@@ -25,11 +25,11 @@ abstract class BaseParser
         return $this->tokens[$this->currentIndex] ?? null;
     }
 
-    protected function match(string $type): bool
+    protected function match(string $type, bool $consume = true): bool
     {
         $token = $this->currentToken();
         if ($token && $token[0] === $type) {
-            $this->advance();
+            if($consume) $this->advance();
             return true;
         }
         return false;

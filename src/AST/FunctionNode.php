@@ -2,16 +2,17 @@
 
 namespace Oida\AST;
 
-use Oida\AST\ASTNode;
+use Exception;
+use Oida\AST\CodeBlock\CodeBlockNode;
 use Oida\Environment\Environment;
 
 class FunctionNode extends ASTNode
 {
     private IdentifierNode $name;
     private array $args ;
-    private array $body;
+    private ASTNode $body;
 
-    public function __construct(IdentifierNode $name, array $body, ?array $args = [])
+    public function __construct(IdentifierNode $name, CodeBlockNode $body, ?array $args = [])
     {
         $this->type = 'function';
         $this->name = $name;
@@ -19,8 +20,22 @@ class FunctionNode extends ASTNode
         $this->args = $args;
     }
 
-    public function evaluate(Environment $env)
+    /**
+     * @throws Exception
+     */
+    public function evaluate(Environment $env): void
     {
-        // TODO: Implement evaluate() method.
+        $env->defineFunction($this->name->getName(), $this->body, $this->args);
+    }
+
+
+    public function getBody(): CodeBlockNode|ASTNode
+    {
+        return $this->body;
+    }
+
+    public function getArgs(): ?array
+    {
+        return $this->args;
     }
 }

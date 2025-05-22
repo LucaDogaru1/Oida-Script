@@ -32,4 +32,5 @@ class HelperMethods extends BaseParser
         return [$values, $this->currentIndex];
     }
 
+
 }

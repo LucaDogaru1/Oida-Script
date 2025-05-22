@@ -2,15 +2,12 @@
 
 namespace Oida\AST;
 
-use AllowDynamicProperties;
 use Exception;
-use Oida\Environment\ClassInstance;
+use Oida\AST\ASTNode;
 use Oida\Environment\Environment;
-use function PHPUnit\Framework\isInstanceOf;
 
-#[AllowDynamicProperties] class IdentifierNode extends ASTNode
+class IdentifierNode extends ASTNode
 {
-
     private string $name;
 
     public function __construct(string $name, string $type = 'identifier')
@@ -25,9 +22,9 @@ use function PHPUnit\Framework\isInstanceOf;
     public function evaluate(Environment $env)
     {
         $this->checkError($env);
-        $currentObject = $env->getCurrentObject();
 
-        if ($currentObject->hasProperty($this->name)) {
+        $currentObject = $env->getCurrentObject();
+        if ($currentObject && $currentObject->hasProperty($this->name)) {
             return $currentObject->getProperty($this->name);
         }
 
@@ -46,9 +43,6 @@ use function PHPUnit\Framework\isInstanceOf;
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -57,17 +51,20 @@ use function PHPUnit\Framework\isInstanceOf;
     /**
      * @throws Exception
      */
-    private function checkError($env): void
+    private function checkError(Environment $env): void
     {
-        if (!$env->hasVariable($this->name)
+        $currentObject = $env->getCurrentObject();
+
+        $notDefined = !$env->hasVariable($this->name)
             && !$env->hasFunction($this->name)
             && !$env->hasClass($this->name)
-            && (!$env->getCurrentObject() || !$env->getCurrentObject()->hasProperty($this->name))) {
+            && (!$currentObject || !$currentObject->hasProperty($this->name));
 
+        if ($notDefined) {
             if ($env->isInConstructor()) {
-                throw new Exception(  "🛑 \033[1;4;97m{$this->name}\033[0m \033[90m→\033[0m \033[91mexistiert nicht mal – wie willst du ihn dann im Konstruktor setzen?\033[0m");
+                throw new Exception("🛑 \033[1;4;97m{$this->name}\033[0m \033[90m→\033[0m \033[91mexistiert nicht mal – wie willst du ihn dann im Konstruktor setzen?\033[0m");
             } else {
-                throw new Exception("Unbekannter Bezeichner '{$this->name}'.");
+                throw new Exception("🛑 \033[1;91mUnbekannter Bezeichner\033[0m \033[1;97m'{$this->name}'\033[0m.");
             }
         }
     }

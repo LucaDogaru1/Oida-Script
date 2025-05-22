@@ -84,10 +84,11 @@ class Lexer
     {
         return [
             'T_IF' => '/\bwenn\b/',
+            'T_IF_ELSE' => '/\bsonst wenn\b/',
             'T_ELSE' => '/\bsonst\b/',
-            'T_FOR' => '\baufi\b',
-            'T_WHILE' => '/\bgeh weida\b/',
-            'T_FOREACH' => '/\bfiaOis\b/',
+            'T_FOREACH' => '/(asdfwr|fürAlles)/',
+            'T_FOR' => '/(asdasddssd|für)/',
+            'T_WHILE' => '/(asdfwr|während)/',
             'T_AS' => '/\bals\b/',
         ];
     }
@@ -97,16 +98,14 @@ class Lexer
         return [
             'T_TRUE' => '/\bbasst\b/',
             'T_FALSE' => '/\bsichaned\b/',
-            'T_LOGICAL_AND' => '/\bund\b/',
-            'T_LOGICAL_OR' => '/\boda\b/',
         ];
     }
 
     private function operators(): array
     {
         return [
-            'T_COMPARISON_OPERATOR' => '/\bgleich\b|\bisned\b|\bklanaglei\b|\b(gößerglei|größerglei)\b|\bklana\b|\bgrößer\b/',
-            'T_ARITHMETIC_OPERATOR' => '/(plusplus|minusminus|mal|dividier|plus|minus)/',
+            'T_COMPARISON_OPERATOR' => '/\bgleich\b|\bisned\b|\bklanaglei\b|\b(größerglei|größerglei)\b|\bklana\b|\bgrößer\b|\bund\b|\boda\b/',
+            'T_ARITHMETIC_OPERATOR' => '/(plusplus|minusminus|mal|durch|plus|minus)/',
             'T_ASSIGN' => '/\+=|-=|\*=|\/=|=/',
             'T_FILTER_ARROW' => '/=>/',
         ];

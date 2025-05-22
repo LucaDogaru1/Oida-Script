@@ -51,4 +51,15 @@ class TokenizerGeneralTokensTest extends TestCase
         $this->assertEquals('T_IDENTIFIER', $token[0]);
     }
 
+    public function test_foreach_token()
+    {
+        $input = "fürAlles";
+        $lexer = new Lexer($input);
+
+        $tokens = $lexer->tokenize();
+        $token = $tokens[0];
+
+        $this->assertEquals('T_FOREACH', $token[0]);
+    }
+
 }

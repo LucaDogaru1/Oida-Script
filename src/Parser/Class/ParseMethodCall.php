@@ -16,7 +16,6 @@ class ParseMethodCall extends BaseParser
     public function parse(int $tokenIndex): ?array
     {
         $this->currentIndex = $tokenIndex;
-
         if(!$this->match('T_IDENTIFIER')) return null;
         $object =  new IdentifierNode($this->tokens[$this->currentIndex - 1][1]);
 
@@ -32,9 +31,8 @@ class ParseMethodCall extends BaseParser
 
         $this->expect('T_CLOSING_PARENTHESIS');
 
-        $this->expect('T_LINE_END');
-
         $methodCallNode = new MethodCallNode($object, $methodName, $args);
+        if($this->match('T_LINE_END')) return [$methodCallNode, $this->currentIndex];
         return [$methodCallNode, $this->currentIndex];
     }
 

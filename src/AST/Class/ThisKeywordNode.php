@@ -7,6 +7,7 @@ use Oida\AST\ASTNode;
 use Oida\AST\IdentifierNode;
 use Oida\Environment\ClassInstance;
 use Oida\Environment\Environment;
+use Oida\Exceptions\ReturnException;
 
 class ThisKeywordNode extends ASTNode
 {
@@ -70,12 +71,14 @@ class ThisKeywordNode extends ASTNode
             }
         }
 
-        $result = null;
-        foreach ($method->getBody()->getStatements() as $node) {
-            $result = $node->evaluate($localEnv);
+        try {
+            foreach ($method->getBody()->getStatements() as $node) {
+                $node->evaluate($localEnv);
+            }
+            return null;
+        } catch (ReturnException $e) {
+            return $e->getValue();
         }
-
-        return $result;
     }
 
     /**

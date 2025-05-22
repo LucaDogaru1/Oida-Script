@@ -4,14 +4,10 @@ namespace Tests\Evaluate;
 
 use Exception;
 use Oida\AST\Class\ClassNode;
-use Oida\AST\Class\MethodNode;
 use Oida\AST\Class\ObjectNode;
-use Oida\Environment\ClassInstance;
 use Oida\Environment\Environment;
 use Oida\Parser\Class\ParseClass;
-use Oida\Parser\Class\ParseClassMethod;
 use Oida\Parser\Class\ParseInitializeObject;
-use Oida\Parser\Class\ParseMethodCall;
 use Oida\Parser\ParseCodeBlock;
 use Oida\Parser\ParseVariable;
 use Tests\Parser\ParserTestCase;
@@ -42,7 +38,6 @@ class EvaluateObjectTest extends ParserTestCase
         $this->assertInstanceOf(ObjectNode::class, $objectNode);
         $this->assertEquals('User', $objectNode->getObjectName());
         $this->assertInstanceOf(ClassNode::class, $classNode);
-        $this->assertEquals('User', $classNode->getClassName());
         $this->assertEquals('User', $classNode->getClassName());
     }
 
@@ -146,7 +141,11 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals("12", $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("12", $output);
     }
 
     /**
@@ -166,7 +165,11 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals("14", $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("14", $output);
     }
 
 
@@ -191,7 +194,11 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals("3", $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("3", $output);
     }
 
     /**
@@ -219,7 +226,12 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals("6", $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+
+        $this->assertEquals("6", $output);
     }
 
 
@@ -303,7 +315,6 @@ class EvaluateObjectTest extends ParserTestCase
 
         $output = ob_get_clean();
 
-        var_dump($output);
         $this->assertEquals("bwm3210audi1300", $output);
     }
 
@@ -323,7 +334,7 @@ class EvaluateObjectTest extends ParserTestCase
         heast jo = neu schuh();
         jo gibMa SICHA();";
 
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage("Oida, was glaubst eigentlich");
 
         $env = new Environment();
@@ -363,7 +374,12 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals('5', $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+
+        $this->assertEquals('5', $output);
     }
 
 
@@ -375,7 +391,7 @@ class EvaluateObjectTest extends ParserTestCase
 
         $inputClass = "klasse kuh{
          privat a;
-       
+        
          öffentlich hawara HHH(){
          this:a = 5;
          oida.sag(this:a);
@@ -392,7 +408,66 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals('5', $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals('5', $output);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_method_with_return_value()
+    {
+
+        $inputClass = "klasse tun{
+        privat test = 7;
+
+         öffentlich hawara HHH(){
+         speicher this:test;
+         }
+      }
+      
+        heast jo = neu tun();
+        heast x = jo gibMa HHH();;
+        oida.sag(x);
+        ";
+
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $this->assertEquals('7',  $codeBlockNode->evaluate($env));
+    }
+
+    public function test_should_throw_exception_when_trying_to_store_void_method_on_variable()
+    {
+        $inputClass = "klasse tun{
+         öffentlich hawara HHH(){
+         oida.sag(7);
+         }
+      }
+        heast jo = neu tun();
+        heast x = jo gibMa HHH();;
+        ";
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("🛑 \033[1;31mHÄ??,\033[0m \033[1;31mdu kannst nicht ");
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+        $codeBlockNode->evaluate($env);
+
     }
 
 }

@@ -3,10 +3,11 @@
 namespace Oida\Parser;
 
 use Exception;
-use Oida\AST\Class\ThisKeywordStatementNode;
+use Oida\Parser\BinaryExpression\ParseBinaryOperation;
 use Oida\Parser\Class\ParseInitializeObject;
 use Oida\Parser\Class\ParseMethodCall;
 use Oida\Parser\Class\ParseThisKeyWord;
+use Oida\Parser\DataStructures\ParseArray;
 
 class ParseExpression extends BaseParser
 {
@@ -21,21 +22,27 @@ class ParseExpression extends BaseParser
         $string = (new ParseString($this->tokens))->parse($this->currentIndex);
         if($string) return $string;
 
+        $array = (new ParseArray($this->tokens))->parse($this->currentIndex);
+        if($array) return $array;
+
+        $methodCall = (new ParseMethodCall($this->tokens))->parse($this->currentIndex);
+        if($methodCall) return $methodCall;
+
+        $functionCall = (new ParseFunctionCall($this->tokens))->parse($this->currentIndex);
+        if($functionCall) return $functionCall;
+
+        $binaryOperation = (new ParseBinaryOperation($this->tokens))->parse($this->currentIndex, 0);
+        if($binaryOperation) return $binaryOperation;
+
         $number =  (new ParseNumber($this->tokens))->parse($this->currentIndex);
         if($number) return $number;
 
         $thisKeyword = (new ParseThisKeyWord($this->tokens))->parse($this->currentIndex);
-
         if($thisKeyword) return $thisKeyword;
-
-        $print = (new ParsePrint($this->tokens))->parse($this->currentIndex);
-        if($print) return $print;
 
         $object = (new ParseInitializeObject($this->tokens))->parse($this->currentIndex);
         if($object) return $object;
 
-        $methodCall = (new ParseMethodCall($this->tokens))->parse($this->currentIndex);
-        if($methodCall) return $methodCall;
 
         $identifier = (new ParseIdentifier($this->tokens))->parse($this->currentIndex);
         if($identifier) return $identifier;

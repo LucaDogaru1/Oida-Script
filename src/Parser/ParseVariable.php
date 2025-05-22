@@ -26,6 +26,7 @@ class ParseVariable extends BaseParser
         [$value, $this->currentIndex] = (new ParseExpression($this->tokens))->parse($this->currentIndex);
 
         $this->expect('T_LINE_END');
+
         $variableNode = new VariableNode($varName, $value);
 
         return [$variableNode, $this->currentIndex];

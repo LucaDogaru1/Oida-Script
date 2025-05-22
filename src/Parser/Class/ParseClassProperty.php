@@ -31,8 +31,8 @@ class ParseClassProperty extends BaseParser
         } else {
             $nodeValue = new NullExpressionNode();
         }
-        $this->expect('T_LINE_END');
 
+        $this->expect('T_LINE_END');
         return [new ClassVariableNode($visibility, $variableName, $nodeValue), $this->currentIndex];
 
     }

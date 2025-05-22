@@ -87,7 +87,7 @@ class Environment
             return $this->parent->getFunction($name);
         }
 
-        return throw new Exception("Unknown identifier:" . $name);
+        return throw new Exception("Gibt keine Function die so heißt:" . $name);
     }
 
 
@@ -120,12 +120,9 @@ class Environment
     /**
      * @throws Exception
      */
-    public function getCurrentObject(): object
+    public function getCurrentObject(): ?object
     {
-        if ($this->currentObject === null) {
-            throw new Exception("No current object in context.");
-        }
-        return $this->currentObject;
+        return $this->currentObject ?? null;
     }
     public function defineClassProperty(string $name, $value, $visibility): void
     {

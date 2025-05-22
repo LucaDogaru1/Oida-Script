@@ -15,12 +15,20 @@ class PrintNode extends ASTNode
         $this->values = $values;
     }
 
-    public function evaluate(Environment $env)
+    public function evaluate(Environment $env): string
     {
         $output = '';
+
         foreach ($this->values as $valueNode) {
-            $output.= $valueNode->evaluate($env);
+            $value = $valueNode->evaluate($env);
+
+            if ($value === null) continue;
+            if ($value instanceof VoidValue) continue;
+            if (is_bool($value)) continue;
+            if (is_object($value) && !method_exists($value, '__toString')) continue;
+            $output .= $value;
         }
+
         echo $output;
         return $output;
     }
