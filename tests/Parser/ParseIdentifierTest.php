@@ -5,7 +5,7 @@ namespace Tests\Parser;
 
 
 use Exception;
-use Oida\Parser\ParseIdentifier;
+use Oida\Parser\Literals\ParseIdentifier;
 
 class ParseIdentifierTest extends ParserTestCase
 {

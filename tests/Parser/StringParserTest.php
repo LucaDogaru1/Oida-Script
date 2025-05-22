@@ -3,8 +3,7 @@
 namespace Tests\Parser;
 
 use Exception;
-use Oida\Lexer\Lexer;
-use Oida\Parser\ParseString;
+use Oida\Parser\Literals\ParseString;
 
 
 class StringParserTest extends ParserTestCase

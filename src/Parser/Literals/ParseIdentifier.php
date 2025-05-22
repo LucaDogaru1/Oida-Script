@@ -1,26 +1,26 @@
 <?php
 
-namespace Oida\Parser;
+namespace Oida\Parser\Literals;
 
 use Exception;
-use Oida\AST\NumberNode;
+use Oida\AST\IdentifierNode;
+use Oida\Parser\BaseParser;
 
-class ParseNumber extends BaseParser
+class ParseIdentifier extends BaseParser
 {
+
     /**
      * @throws Exception
      */
     public function parse(int $tokenIndex): ?array
     {
         $this->currentIndex = $tokenIndex;
-
-        if(!$this->match('T_NUMBER')) return null;
+        if (!$this->match('T_IDENTIFIER')) return null;
 
         $token = $this->tokens[$this->currentIndex - 1];
-        $value = $token[1];
+        $name = $token[1];
 
-        $node = new NumberNode($value);
+        $node = new IdentifierNode($name);
         return [$node, $this->currentIndex];
     }
-
 }

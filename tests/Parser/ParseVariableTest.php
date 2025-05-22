@@ -4,9 +4,7 @@ namespace Tests\Parser;
 
 use Exception;
 use Oida\AST\Class\ObjectNode;
-use Oida\Environment\Environment;
-use Oida\Parser\Class\ParseClass;
-use Oida\Parser\ParseVariable;
+use Oida\Parser\Variable\ParseVariable;
 
 class ParseVariableTest extends ParserTestCase
 {

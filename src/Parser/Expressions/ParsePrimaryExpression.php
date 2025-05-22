@@ -8,12 +8,12 @@ use Oida\Parser\Class\ParseInitializeObject;
 use Oida\Parser\Class\ParseMethodCall;
 use Oida\Parser\Class\ParseThisKeyWord;
 use Oida\Parser\DataStructures\ParseArray;
+use Oida\Parser\Function\ParseFunctionCall;
 use Oida\Parser\HigherOrderFunctions\ParseFilter;
 use Oida\Parser\HigherOrderFunctions\ParseMap;
-use Oida\Parser\ParseFunctionCall;
-use Oida\Parser\ParseIdentifier;
-use Oida\Parser\ParseNumber;
-use Oida\Parser\ParseString;
+use Oida\Parser\Literals\ParseIdentifier;
+use Oida\Parser\Literals\ParseNumber;
+use Oida\Parser\Literals\ParseString;
 
 class ParsePrimaryExpression extends BaseParser
 {

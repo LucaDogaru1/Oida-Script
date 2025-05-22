@@ -1,9 +1,10 @@
 <?php
 
-namespace Oida\Parser;
+namespace Oida\Parser\Literals;
 
-use Oida\AST\StringNode;
 use Exception;
+use Oida\AST\StringNode;
+use Oida\Parser\BaseParser;
 
 class ParseString extends BaseParser
 {

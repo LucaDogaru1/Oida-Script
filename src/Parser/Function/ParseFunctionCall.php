@@ -1,7 +1,8 @@
 <?php
 
-namespace Oida\Parser;
+namespace Oida\Parser\Function;
 
+use Exception;
 use Oida\AST\FunctionCallNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
@@ -9,7 +10,7 @@ use Oida\Parser\HelperMethods\HelperMethods;
 class ParseFunctionCall extends BaseParser
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse(int $tokenIndex): ?array
     {

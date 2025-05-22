@@ -1,9 +1,10 @@
 <?php
 
-namespace Oida\Parser;
+namespace Oida\Parser\Print;
 
 use Exception;
 use Oida\AST\PrintNode;
+use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
 
 class ParsePrint extends BaseParser

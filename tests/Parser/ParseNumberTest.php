@@ -4,9 +4,7 @@ namespace Parser;
 
 
 use Exception;
-use Oida\Lexer\Lexer;
-use Oida\Parser\ParseNumber;
-use PHPUnit\Framework\TestCase;
+use Oida\Parser\Literals\ParseNumber;
 use Tests\Parser\ParserTestCase;
 
 class ParseNumberTest extends ParserTestCase

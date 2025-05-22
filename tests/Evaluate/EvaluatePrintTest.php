@@ -4,7 +4,7 @@ namespace Tests\Evaluate;
 
 use Exception;
 use Oida\Environment\Environment;
-use Oida\Parser\ParsePrint;
+use Oida\Parser\Print\ParsePrint;
 use Tests\Parser\ParserTestCase;
 
 class EvaluatePrintTest extends ParserTestCase

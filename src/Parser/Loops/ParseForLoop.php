@@ -8,7 +8,7 @@ use Oida\Parser\BaseParser;
 use Oida\Parser\BinaryExpression\ParseBinaryOperation;
 use Oida\Parser\ConditionExpression\ParseConditionExpression;
 use Oida\Parser\ParseCodeBlock;
-use Oida\Parser\ParseVariable;
+use Oida\Parser\Variable\ParseVariable;
 
 class ParseForLoop extends BaseParser
 {

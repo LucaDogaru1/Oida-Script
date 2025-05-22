@@ -11,10 +11,14 @@ use Oida\Parser\Class\ParseClassProperty;
 use Oida\Parser\Class\ParseConstructor;
 use Oida\Parser\Class\ParseThisKeyWordStatement;
 use Oida\Parser\Expressions\ParseExpression;
+use Oida\Parser\Function\ParseFunction;
 use Oida\Parser\IfStatement\ParseIfStatement;
 use Oida\Parser\Loops\ParseForEachLoop;
 use Oida\Parser\Loops\ParseForLoop;
 use Oida\Parser\Loops\ParseWhileLoop;
+use Oida\Parser\Print\ParsePrint;
+use Oida\Parser\Return\ParseReturn;
+use Oida\Parser\Variable\ParseVariable;
 
 class ParseStatement extends BaseParser
 {

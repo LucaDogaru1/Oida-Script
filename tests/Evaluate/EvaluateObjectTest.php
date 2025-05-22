@@ -9,7 +9,7 @@ use Oida\Environment\Environment;
 use Oida\Parser\Class\ParseClass;
 use Oida\Parser\Class\ParseInitializeObject;
 use Oida\Parser\ParseCodeBlock;
-use Oida\Parser\ParseVariable;
+use Oida\Parser\Variable\ParseVariable;
 use Tests\Parser\ParserTestCase;
 
 class EvaluateObjectTest extends ParserTestCase

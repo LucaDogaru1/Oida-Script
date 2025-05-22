@@ -4,7 +4,7 @@ namespace Tests\Parser;
 
 
 use Exception;
-use Oida\Parser\ParsePrint;
+use Oida\Parser\Print\ParsePrint;
 
 
 class ParsePrintTest extends ParserTestCase

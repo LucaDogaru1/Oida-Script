@@ -1,9 +1,10 @@
 <?php
 
-namespace Oida\Parser;
+namespace Oida\Parser\Return;
 
 use Exception;
 use Oida\AST\ReturnNode;
+use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;
 
 class ParseReturn extends BaseParser

@@ -2,6 +2,7 @@
 
 namespace Oida\Parser\HigherOrderFunctions;
 
+use Exception;
 use Oida\AST\HigherOrderFunction\FilterNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\ConditionExpression\ParseConditionExpression;
@@ -10,7 +11,7 @@ class ParseFilter extends BaseParser
 {
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse(int $tokenIndex): ?array
     {
@@ -34,7 +35,7 @@ class ParseFilter extends BaseParser
 
 
         if (!$parsed) {
-            throw new \Exception("🛑 Du musst schon eine Bedingung beim Filter angeben ??");
+            throw new Exception("🛑 Du musst schon eine Bedingung beim Filter angeben ??");
         }
 
         [$condition, $this->currentIndex] = $parsed;
