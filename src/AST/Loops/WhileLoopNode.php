@@ -2,6 +2,7 @@
 
 namespace Oida\AST\Loops;
 
+use Exception;
 use Oida\AST\ASTNode;
 use Oida\AST\CodeBlock\CodeBlockNode;
 use Oida\AST\ConditionOperationNode;
@@ -22,7 +23,7 @@ class WhileLoopNode extends ASTNode
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function evaluate(Environment $env): VoidValue
     {

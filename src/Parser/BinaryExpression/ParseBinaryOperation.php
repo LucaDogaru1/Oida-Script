@@ -5,7 +5,7 @@ namespace Oida\Parser\BinaryExpression;
 use Exception;
 use Oida\AST\BinaryOperationNode;
 use Oida\Parser\BaseParser;
-use Oida\Parser\ParseExpression;
+use Oida\Parser\Expressions\ParsePrimaryExpression;
 
 class ParseBinaryOperation extends BaseParser
 {
@@ -16,7 +16,7 @@ class ParseBinaryOperation extends BaseParser
     {
         $this->currentIndex = $tokenIndex;
 
-        $leftExpr = (new ParseOperand($this->tokens))->parse($this->currentIndex);
+        $leftExpr = (new ParsePrimaryExpression($this->tokens))->parse($this->currentIndex);
         if (!$leftExpr) return null;
         [$leftNode, $this->currentIndex] = $leftExpr;
 

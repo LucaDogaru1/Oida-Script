@@ -8,7 +8,7 @@ use Oida\AST\Class\ClassVariableNode;
 use Oida\AST\IdentifierNode;
 use Oida\AST\NullExpressionNode;
 use Oida\Parser\BaseParser;
-use Oida\Parser\ParseExpression;
+use Oida\Parser\Expressions\ParseExpression;
 
 class ParseClassProperty extends BaseParser
 {

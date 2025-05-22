@@ -4,7 +4,7 @@ namespace Oida\Parser\HelperMethods;
 
 use Exception;
 use Oida\Parser\BaseParser;
-use Oida\Parser\ParseExpression;
+use Oida\Parser\Expressions\ParseExpression;
 
 class HelperMethods extends BaseParser
 {

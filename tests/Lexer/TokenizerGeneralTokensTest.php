@@ -62,4 +62,14 @@ class TokenizerGeneralTokensTest extends TestCase
         $this->assertEquals('T_FOREACH', $token[0]);
     }
 
+    public function test_filter_token()
+    {
+        $input = "nimmAusse";
+        $lexer = new Lexer($input);
+
+        $tokens = $lexer->tokenize();
+        $token = $tokens[0];
+
+        $this->assertEquals('T_FILTER', $token[0]);
+    }
 }

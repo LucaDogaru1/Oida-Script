@@ -6,7 +6,7 @@ use Exception;
 use Oida\AST\Class\ThisKeywordStatementNode;
 use Oida\AST\IdentifierNode;
 use Oida\Parser\BaseParser;
-use Oida\Parser\ParseExpression;
+use Oida\Parser\Expressions\ParseExpression;
 
 class ParseThisKeyWordStatement extends BaseParser
 {

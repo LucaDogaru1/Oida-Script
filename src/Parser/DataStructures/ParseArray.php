@@ -3,9 +3,9 @@
 namespace Oida\Parser\DataStructures;
 
 use Exception;
-use Oida\AST\DataStructureNode\ArrayNode;
+use Oida\AST\DataStructure\ArrayNode;
 use Oida\Parser\BaseParser;
-use Oida\Parser\ParseExpression;
+use Oida\Parser\Expressions\ParseExpression;
 
 class ParseArray extends BaseParser
 {

@@ -8,6 +8,7 @@ use Oida\Parser\Class\ParseClassMethod;
 use Oida\Parser\Class\ParseClassProperty;
 use Oida\Parser\Class\ParseConstructor;
 use Oida\Parser\Class\ParseThisKeyWordStatement;
+use Oida\Parser\Expressions\ParseExpression;
 use Oida\Parser\IfStatement\ParseIfStatement;
 use Oida\Parser\Loops\ParseForEachLoop;
 use Oida\Parser\Loops\ParseForLoop;

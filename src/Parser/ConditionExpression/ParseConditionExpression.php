@@ -5,7 +5,7 @@ namespace Oida\Parser\ConditionExpression;
 use Exception;
 use Oida\AST\ConditionOperationNode;
 use Oida\Parser\BaseParser;
-use Oida\Parser\ParseExpression;
+use Oida\Parser\Expressions\ParseExpression;
 
 class ParseConditionExpression extends BaseParser
 {
@@ -30,6 +30,7 @@ class ParseConditionExpression extends BaseParser
         $leftExpr = (new ParseExpression($this->tokens))->parse($this->currentIndex);
         if (!$leftExpr) return null;
         [$leftNode, $this->currentIndex] = $leftExpr;
+
 
         while ($this->match('T_COMPARISON_OPERATOR', false))
         {

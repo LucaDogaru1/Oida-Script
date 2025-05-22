@@ -4,7 +4,7 @@ namespace Oida\Parser;
 
 use Exception;
 use Oida\AST\ReturnNode;
-use Oida\Parser\BaseParser;
+use Oida\Parser\Expressions\ParseExpression;
 
 class ParseReturn extends BaseParser
 {

@@ -19,6 +19,7 @@ class Environment
     private ?Environment $parent = null;
 
     private ?object $currentObject = null;
+    private bool $inFunction = false;
 
     public function __construct(?Environment $parent = null)
     {
@@ -214,4 +215,18 @@ class Environment
         return $this->insideClass;
     }
 
+
+    public function enterFunction(): void
+    {
+        $this->inFunction = true;
+    }
+    public function inFunction(): bool
+    {
+        return $this->inFunction;
+    }
+
+    public function leaveFunction(): void
+    {
+        $this->inFunction = false;
+    }
 }

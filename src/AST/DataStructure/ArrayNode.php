@@ -1,6 +1,6 @@
 <?php
 
-namespace Oida\AST\DataStructureNode;
+namespace Oida\AST\DataStructure;
 
 use Oida\AST\ASTNode;
 use Oida\Environment\Environment;

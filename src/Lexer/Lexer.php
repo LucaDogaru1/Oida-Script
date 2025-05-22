@@ -89,6 +89,7 @@ class Lexer
             'T_FOREACH' => '/(asdfwr|fürAlles)/',
             'T_FOR' => '/(asdasddssd|für)/',
             'T_WHILE' => '/(asdfwr|während)/',
+            'T_FILTER' => '/\bnimmAusse\b/',
             'T_AS' => '/\bals\b/',
         ];
     }
@@ -106,8 +107,8 @@ class Lexer
         return [
             'T_COMPARISON_OPERATOR' => '/\bgleich\b|\bisned\b|\bklanaglei\b|\b(größerglei|größerglei)\b|\bklana\b|\bgrößer\b|\bund\b|\boda\b/',
             'T_ARITHMETIC_OPERATOR' => '/(plusplus|minusminus|mal|durch|plus|minus)/',
-            'T_ASSIGN' => '/\+=|-=|\*=|\/=|=/',
             'T_FILTER_ARROW' => '/=>/',
+            'T_ASSIGN' => '/\+=|-=|\*=|\/=|=/',
         ];
     }
 

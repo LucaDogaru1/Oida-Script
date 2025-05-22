@@ -6,7 +6,6 @@ use Exception;
 use Oida\AST\IfStatementNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\ConditionExpression\ParseConditionExpression;
-use Oida\Parser\HelperMethods\HelperMethods;
 use Oida\Parser\ParseCodeBlock;
 
 class ParseIfStatement extends BaseParser
