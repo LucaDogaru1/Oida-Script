@@ -3,6 +3,8 @@
 namespace Oida\Parser;
 
 use Exception;
+use Oida\AST\HigherOrderFunction\FilterNode;
+use Oida\AST\HigherOrderFunction\MapNode;
 use Oida\Parser\Class\ParseClass;
 use Oida\Parser\Class\ParseClassMethod;
 use Oida\Parser\Class\ParseClassProperty;
@@ -64,7 +66,14 @@ class ParseStatement extends BaseParser
         if($forEach) return $forEach;
 
         $expression = (new ParseExpression($this->tokens))->parse($this->currentIndex);
-        if($expression) return $expression;
+        if ($expression) {
+            if ($expression[0] instanceof MapNode || $expression[0] instanceof FilterNode) {
+                throw new Exception("🛑 \033[1;31m'map'\033[0m oder \033[1;31m'filter'\033[0m darfst du nicht einfach so stehen lassen. \033[1;33mPack's in eine Variable, mein Bester.\033[0m");
+            }
+
+            return $expression;
+        }
+
 
         return null;
     }

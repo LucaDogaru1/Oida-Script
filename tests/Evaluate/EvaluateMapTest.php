@@ -7,19 +7,19 @@ use Oida\Environment\Environment;
 use Oida\Parser\ParseCodeBlock;
 use Tests\Parser\ParserTestCase;
 
-class EvaluateFilterTest extends ParserTestCase
+class EvaluateMapTest extends ParserTestCase
 {
 
     /**
      * @throws Exception
      */
-    public function test_filter_return_new_array()
+    public function test_map_return_new_array()
     {
         $inputClass = "
-        heast x = [1,2,3,4,5];
-        heast neuesArray = nimmAusse => x(number => number klana 4);
+        heast array = [1,2,3,4,5];
+        heast neuesArray = karte => array(number => number mal 2);
         
-        fürAlles(neuesArray als array) { oida.sag(array);}
+        fürAlles(neuesArray als item) { oida.sag(item);}
        ";
 
         $env = new Environment();
@@ -31,6 +31,6 @@ class EvaluateFilterTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('123', $output);
+        $this->assertEquals('246810', $output);
     }
 }

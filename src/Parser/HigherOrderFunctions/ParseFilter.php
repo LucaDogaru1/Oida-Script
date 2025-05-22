@@ -17,7 +17,7 @@ class ParseFilter extends BaseParser
         $this->currentIndex = $tokenIndex;
         if (!$this->match('T_FILTER')) return null;
 
-        $this->expect('T_FILTER_ARROW');
+        $this->expect('T_ARROW');
 
         $this->expect('T_IDENTIFIER');
         $arrayName = $this->tokens[$this->currentIndex - 1][1];
@@ -27,7 +27,8 @@ class ParseFilter extends BaseParser
         $this->expect('T_IDENTIFIER');
         $itemName = $this->tokens[$this->currentIndex - 1][1];
 
-        $this->currentIndex--;
+        $this->expect('T_ARROW');
+
         $conditionParser = new ParseConditionExpression($this->tokens);
         $parsed = $conditionParser->parse($this->currentIndex);
 

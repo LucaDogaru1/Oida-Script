@@ -9,6 +9,7 @@ use Oida\Parser\Class\ParseMethodCall;
 use Oida\Parser\Class\ParseThisKeyWord;
 use Oida\Parser\DataStructures\ParseArray;
 use Oida\Parser\HigherOrderFunctions\ParseFilter;
+use Oida\Parser\HigherOrderFunctions\ParseMap;
 use Oida\Parser\ParseFunctionCall;
 use Oida\Parser\ParseIdentifier;
 use Oida\Parser\ParseNumber;
@@ -34,6 +35,9 @@ class ParsePrimaryExpression extends BaseParser
 
         $filter = (new ParseFilter($this->tokens))->parse($this->currentIndex);
         if ($filter) return $filter;
+
+        $map = (new ParseMap($this->tokens))->parse($this->currentIndex);
+        if($map) return $map;
 
         $methodCall = (new ParseMethodCall($this->tokens))->parse($this->currentIndex);
         if ($methodCall) return $methodCall;
