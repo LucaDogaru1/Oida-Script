@@ -308,7 +308,7 @@ class EvaluateIfTest extends ParserTestCase
         }
         speicher 12;
         }
-        heast x = hat(5);;
+        heast x = hat(5);
         
         oida.sag(x);
        ";

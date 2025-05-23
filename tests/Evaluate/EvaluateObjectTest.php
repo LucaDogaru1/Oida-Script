@@ -431,7 +431,7 @@ class EvaluateObjectTest extends ParserTestCase
       }
       
         heast jo = neu tun();
-        heast x = jo gibMa HHH();;
+        heast x = jo gibMa HHH();
         oida.sag(x);
         ";
 
@@ -454,7 +454,7 @@ class EvaluateObjectTest extends ParserTestCase
          }
       }
         heast jo = neu tun();
-        heast x = jo gibMa HHH();;
+        heast x = jo gibMa HHH();
         ";
 
         $this->expectException(Exception::class);

@@ -13,7 +13,7 @@ class ParseMethodCall extends BaseParser
     /**
      * @throws \Exception
      */
-    public function parse(int $tokenIndex): ?array
+    public function parse(int $tokenIndex, bool $isStatement = false): ?array
     {
         $this->currentIndex = $tokenIndex;
         if(!$this->match('T_IDENTIFIER')) return null;
@@ -32,7 +32,11 @@ class ParseMethodCall extends BaseParser
         $this->expect('T_CLOSING_PARENTHESIS');
 
         $methodCallNode = new MethodCallNode($object, $methodName, $args);
-        if($this->match('T_LINE_END')) return [$methodCallNode, $this->currentIndex];
+
+        if ($isStatement) {
+            $this->expect('T_LINE_END');
+        }
+
         return [$methodCallNode, $this->currentIndex];
     }
 

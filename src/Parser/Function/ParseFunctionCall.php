@@ -12,7 +12,7 @@ class ParseFunctionCall extends BaseParser
     /**
      * @throws Exception
      */
-    public function parse(int $tokenIndex): ?array
+    public function parse(int $tokenIndex, bool $isStatement = false): ?array
     {
         $this->currentIndex = $tokenIndex;
         if (!$this->match('T_IDENTIFIER')) return null;
@@ -24,7 +24,8 @@ class ParseFunctionCall extends BaseParser
         [$args, $this->currentIndex] = $helperMethod->checkForMultipleExpressionsInParenthesis($this->currentIndex);
 
         $this->expect('T_CLOSING_PARENTHESIS');
-        $this->expect('T_LINE_END');
+
+        if($isStatement) $this->expect('T_LINE_END');
 
         $functionCallNode =  new FunctionCallNode($funcName, $args);
         return [$functionCallNode, $this->currentIndex];

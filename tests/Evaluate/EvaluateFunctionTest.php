@@ -11,7 +11,7 @@ class EvaluateFunctionTest extends ParserTestCase
 {
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function test_void_function_displaying_6()
     {
@@ -36,7 +36,7 @@ class EvaluateFunctionTest extends ParserTestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function test_void_function_displaying_6_with_parameter()
     {
@@ -92,7 +92,7 @@ class EvaluateFunctionTest extends ParserTestCase
          speicher a;
         }
         
-        heast x = sag(8);;
+        heast x = sag(8);
         oida.sag(x);
         ";
 
@@ -115,7 +115,7 @@ class EvaluateFunctionTest extends ParserTestCase
           oida.sag(a);
         }
         
-        heast x = sag(8);;
+        heast x = sag(8);
         ";
 
         $this->expectException(Exception::class);

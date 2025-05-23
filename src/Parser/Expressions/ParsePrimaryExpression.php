@@ -3,6 +3,9 @@
 namespace Oida\Parser\Expressions;
 
 use Exception;
+use Oida\AST\Access\PropertyAccessNode;
+use Oida\Parser\Access\ParseArrayAccess;
+use Oida\Parser\Access\ParseArrayPropertyAccess;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Class\ParseInitializeObject;
 use Oida\Parser\Class\ParseMethodCall;
@@ -33,16 +36,22 @@ class ParsePrimaryExpression extends BaseParser
         $array = (new ParseArray($this->tokens))->parse($this->currentIndex);
         if ($array) return $array;
 
+        $arrayAccess = (new ParseArrayAccess($this->tokens))->parse($this->currentIndex);
+        if($arrayAccess) return $arrayAccess;
+
+        $propertyAccess = (new ParseArrayPropertyAccess($this->tokens))->parse($this->currentIndex);
+        if($propertyAccess) return $propertyAccess;
+
         $filter = (new ParseFilter($this->tokens))->parse($this->currentIndex);
         if ($filter) return $filter;
 
         $map = (new ParseMap($this->tokens))->parse($this->currentIndex);
         if($map) return $map;
 
-        $methodCall = (new ParseMethodCall($this->tokens))->parse($this->currentIndex);
+        $methodCall = (new ParseMethodCall($this->tokens))->parse($this->currentIndex, false);
         if ($methodCall) return $methodCall;
 
-        $functionCall = (new ParseFunctionCall($this->tokens))->parse($this->currentIndex);
+        $functionCall = (new ParseFunctionCall($this->tokens))->parse($this->currentIndex, false);
         if ($functionCall) return $functionCall;
 
         $thisKeyword = (new ParseThisKeyWord($this->tokens))->parse($this->currentIndex);

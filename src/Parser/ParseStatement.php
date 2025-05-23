@@ -9,9 +9,11 @@ use Oida\Parser\Class\ParseClass;
 use Oida\Parser\Class\ParseClassMethod;
 use Oida\Parser\Class\ParseClassProperty;
 use Oida\Parser\Class\ParseConstructor;
+use Oida\Parser\Class\ParseMethodCall;
 use Oida\Parser\Class\ParseThisKeyWordStatement;
 use Oida\Parser\Expressions\ParseExpression;
 use Oida\Parser\Function\ParseFunction;
+use Oida\Parser\Function\ParseFunctionCall;
 use Oida\Parser\IfStatement\ParseIfStatement;
 use Oida\Parser\Loops\ParseForEachLoop;
 use Oida\Parser\Loops\ParseForLoop;
@@ -45,8 +47,14 @@ class ParseStatement extends BaseParser
         $method = (new ParseClassMethod($this->tokens))->parse($this->currentIndex);
         if($method) return $method;
 
+        $methodCall = (new ParseMethodCall($this->tokens))->parse($this->currentIndex, true);
+        if($methodCall) return $methodCall;
+
         $function = (new ParseFunction($this->tokens))->parse($this->currentIndex);
         if($function) return $function;
+
+        $functionCall = (new ParseFunctionCall($this->tokens))->parse($this->currentIndex, true);
+        if ($functionCall) return $functionCall;
 
         $classVariable = (new ParseClassProperty($this->tokens))->parse($this->currentIndex);
         if($classVariable) return $classVariable;
