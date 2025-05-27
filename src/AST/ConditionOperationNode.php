@@ -9,7 +9,7 @@ class ConditionOperationNode extends ASTNode
 {  public function __construct(
     private ASTNode $left,
     private string $operator,
-    private ASTNode $right
+    private ?ASTNode $right = null
 ){}
 
     /**
@@ -21,6 +21,7 @@ class ConditionOperationNode extends ASTNode
         $r = $this->right->evaluate($env);
 
         return match ($this->operator) {
+            '!' => !$l,
             'und' => $l && $r,
             'oda' => $l || $r,
             'gleich' => $l == $r,
@@ -31,5 +32,11 @@ class ConditionOperationNode extends ASTNode
             'klanaglei' => $l <= $r,
             default => throw new Exception("Unbekannter logischer Operator '{$this->operator}'")
         };
+    }
+
+
+    public function getRight(): ASTNode
+    {
+        return  $this->right;
     }
 }

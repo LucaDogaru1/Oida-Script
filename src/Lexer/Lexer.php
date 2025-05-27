@@ -106,7 +106,7 @@ class Lexer
     private function operators(): array
     {
         return [
-            'T_COMPARISON_OPERATOR' => '/\bgleich\b|\bisned\b|\bklanaglei\b|\b(größerglei|größerglei)\b|\bklana\b|\bgrößer\b|\bund\b|\boda\b/',
+            'T_COMPARISON_OPERATOR' => '/\b(gleich|isned|klanaglei|größerglei|klana|größer|und|oda)\b|!/',
             'T_ARITHMETIC_OPERATOR' => '/(plusplus|minusminus|mal|durch|plus|minus)/',
             'T_ARROW' => '/=>/',
             'T_ASSIGN' => '/\+=|-=|\*=|\/=|=/',

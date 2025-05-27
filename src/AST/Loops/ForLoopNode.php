@@ -3,6 +3,7 @@
 namespace Oida\AST\Loops;
 
 use Exception;
+use Oida\AST\Access\PropertyAccessNode;
 use Oida\AST\ASTNode;
 use Oida\AST\BinaryOperationNode;
 use Oida\AST\CodeBlock\CodeBlockNode;
@@ -11,6 +12,7 @@ use Oida\AST\VariableNode;
 use Oida\AST\VoidValue;
 use Oida\Environment\Environment;
 use Oida\Exceptions\ReturnException;
+use function PHPUnit\Framework\isEmpty;
 
 class ForLoopNode extends ASTNode
 {
@@ -40,6 +42,8 @@ class ForLoopNode extends ASTNode
         $value = $this->variable->getValue()->evaluate($local);
         $local->defineVariable($name, $value);
 
+        $this->checkForArrayLoop($local);
+
         try {
             while ($this->conditionOperationNode->evaluate($local)) {
                 foreach ($this->body->getStatements() as $body) {
@@ -50,6 +54,23 @@ class ForLoopNode extends ASTNode
             return new VoidValue();
         } catch (ReturnException $e) {
             return $e->getValue();
+        }
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    private function checkForArrayLoop($local): void
+    {
+        $rightNode = $this->conditionOperationNode->getRight();
+
+        if($rightNode instanceof PropertyAccessNode) {
+            $arrayName = $rightNode->getArrayName();
+            $array = $local->getVariable($arrayName);
+            if (empty($array)) {
+                throw new Exception("🛑 \033[1;31m'wenn du über ein Array loopen willst, darf es halt nicht leer sein?'\033[0m");
+            }
         }
 
     }

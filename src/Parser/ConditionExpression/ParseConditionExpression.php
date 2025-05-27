@@ -4,6 +4,7 @@ namespace Oida\Parser\ConditionExpression;
 
 use Exception;
 use Oida\AST\ConditionOperationNode;
+use Oida\AST\VoidValue;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;
 
@@ -18,6 +19,7 @@ class ParseConditionExpression extends BaseParser
         'größerglei' => ['prio' => 2, 'assoc' => 'left'],
         'klana' => ['prio' => 2, 'assoc' => 'left'],
         'klanaglei' => ['prio' => 2, 'assoc' => 'left'],
+        '!' => ['prio' => 3, 'assoc' => 'right'],
     ];
 
     /**
@@ -27,10 +29,12 @@ class ParseConditionExpression extends BaseParser
     {
         $this->currentIndex = $tokenIndex;
 
+        $negationExpr = $this->checkForNegation();
+        if ($negationExpr !== null)  return $negationExpr;
+
         $leftExpr = (new ParseExpression($this->tokens))->parse($this->currentIndex);
         if (!$leftExpr) return null;
         [$leftNode, $this->currentIndex] = $leftExpr;
-
 
         while ($this->match('T_COMPARISON_OPERATOR', false))
         {
@@ -53,6 +57,23 @@ class ParseConditionExpression extends BaseParser
         }
 
         return [$leftNode, $this->currentIndex];
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function checkForNegation(): ?array
+    {
+        $token = $this->tokens[$this->currentIndex];
+
+        if ($token[0] === 'T_COMPARISON_OPERATOR' && $token[1] === '!') {
+            $this->currentIndex++;
+            $expr = $this->parse($this->currentIndex, 3);
+            if (!$expr) throw new Exception("🛑 Nach dem '!' fehlt ein Ausdruck");
+            [$node, $this->currentIndex] = $expr;
+            return [new ConditionOperationNode($node, '!', new VoidValue()), $this->currentIndex];
+        }
+        return null;
     }
 
     /**

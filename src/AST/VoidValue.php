@@ -2,8 +2,15 @@
 
 namespace Oida\AST;
 
-class VoidValue
+
+use Oida\Environment\Environment;
+class VoidValue extends ASTNode
 {
+
+    public function evaluate(Environment $env): null
+    {
+        return null;
+    }
 
     //falls irgenwas schief geht zur sicherheit drinnen lassen
     public function __toString(): string
