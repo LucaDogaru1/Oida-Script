@@ -4,7 +4,7 @@ namespace Oida\Parser\Class;
 
 use Exception;
 use Oida\AST\Class\ThisKeywordStatementNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;
 
@@ -20,7 +20,7 @@ class ParseThisKeyWordStatement extends BaseParser
 
         if (!$this->match('T_THIS')) return null;
 
-        $this->expect('T_CLASS_PROPERTY_ACCESS');
+        $this->expect('T_COLON');
 
         $this->expect('T_IDENTIFIER');
         $propertyName = new IdentifierNode($this->tokens[$this->currentIndex - 1][1]);

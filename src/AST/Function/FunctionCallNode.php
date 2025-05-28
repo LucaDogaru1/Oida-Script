@@ -1,9 +1,10 @@
 <?php
 
-namespace Oida\AST;
+namespace Oida\AST\Function;
 
 use Exception;
 use Oida\AST\ASTNode;
+use Oida\AST\VoidValue;
 use Oida\Environment\Environment;
 use Oida\Exceptions\ReturnException;
 

@@ -147,7 +147,6 @@ class Lexer
             'T_CLASS_PROPERTY_PRIVATE' => '/\bprivat\b/',
             'T_THIS' => '/\bthis\b/',
             'T_CONSTRUCTOR' => '/\bBauMeister\b/',
-            'T_CLASS_PROPERTY_ACCESS' => '/\:/',
         ];
     }
 }

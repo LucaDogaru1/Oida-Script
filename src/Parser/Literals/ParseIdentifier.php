@@ -3,7 +3,7 @@
 namespace Oida\Parser\Literals;
 
 use Exception;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 
 class ParseIdentifier extends BaseParser

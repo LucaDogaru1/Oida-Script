@@ -1,9 +1,11 @@
 <?php
 
-namespace Oida\AST;
+namespace Oida\AST\Function;
 
 use Exception;
+use Oida\AST\ASTNode;
 use Oida\AST\CodeBlock\CodeBlockNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Environment\Environment;
 
 class FunctionNode extends ASTNode

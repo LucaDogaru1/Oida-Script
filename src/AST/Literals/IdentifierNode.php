@@ -1,6 +1,6 @@
 <?php
 
-namespace Oida\AST;
+namespace Oida\AST\Literals;
 
 use Exception;
 use Oida\AST\ASTNode;

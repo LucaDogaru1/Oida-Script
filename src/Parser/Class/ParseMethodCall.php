@@ -3,7 +3,7 @@
 namespace Oida\Parser\Class;
 
 use Oida\AST\Class\MethodCallNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
 

@@ -4,7 +4,7 @@ namespace Oida\AST\Class;
 
 use Exception;
 use Oida\AST\ASTNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Environment\ClassInstance;
 use Oida\Environment\Environment;
 use Oida\Exceptions\ReturnException;
@@ -57,7 +57,7 @@ class ThisKeywordNode extends ASTNode
             )
         ) {
             throw new Exception("🛑 \033[1;31mOida, was glaubst eigentlich?\033[0m\n" .
-                "\033[1;97m'{$method->getMethodName()}'\033[0m is ne \033[1;97mprivate methode\033[0m in \033[1;97m'{$objectInstance->getClassName()}'\033[0m,\n" .
+                "\033[1;97m'{$method->getMethodName()}'\033[0m is ne \033[1;97mprivate methode\033[0m in \033[1;97m'{$method->getClassName()}'\033[0m,\n" .
                 "\033[1;31mwas versuchst da mit der Methode, schau da halt nochmal die basics von OOP an, oder ruf die da ned auf.\033[0m\n");
         }
 

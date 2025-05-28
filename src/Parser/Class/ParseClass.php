@@ -7,7 +7,7 @@ use Oida\AST\Class\ClassNode;
 use Oida\AST\Class\ClassVariableNode;
 use Oida\AST\Class\ConstructorNode;
 use Oida\AST\Class\MethodNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\ParseStatement;
 

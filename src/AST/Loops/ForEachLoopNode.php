@@ -5,21 +5,24 @@ namespace Oida\AST\Loops;
 use Exception;
 use Oida\AST\ASTNode;
 use Oida\AST\CodeBlock\CodeBlockNode;
-use Oida\AST\IdentifierNode;
 use Oida\Environment\Environment;
 
 class ForEachLoopNode extends ASTNode
 {
-    private string $arrayName;
+    private ASTNode  $arrayName;
     private string $itemName;
+
+    private ?string $keyName = null;
+
     private CodeBlockNode $body;
 
 
-    public function __construct(string $arrayName, string $itemName, CodeBlockNode $body)
+    public function __construct(ASTNode  $arrayName, string $itemName, CodeBlockNode $body, ?string $keyName = null)
     {
         $this->arrayName = $arrayName;
         $this->itemName = $itemName;
         $this->body = $body;
+        $this->keyName = $keyName;
     }
 
     /**
@@ -27,18 +30,22 @@ class ForEachLoopNode extends ASTNode
      */
     public function evaluate(Environment $env): void
     {
-        $array = $env->getVariable($this->arrayName);
+        $array = $this->arrayName->evaluate($env);
+        $local = new Environment($env);
 
-        if(!is_array($array)) {
+        if (!is_array($array)) {
             throw new Exception("🛑 '{$this->arrayName}' ist halt kein Array – geht ned mit foreach.");
         }
 
-        foreach ($array as $item) {
-            $local = new Environment($env);
-            $local->defineVariable($this->itemName, $item);
+        foreach ($array as $key => $value) {
+            if ($this->keyName !== null) {
+                $local->defineVariable($this->keyName, $key);
+            }
+            $local->defineVariable($this->itemName, $value);
             foreach ($this->body->getStatements() as $stmt) {
                 $stmt->evaluate($local);
             }
         }
     }
 }
+

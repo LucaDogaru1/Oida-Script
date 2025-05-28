@@ -24,11 +24,12 @@ class PrintNode extends ASTNode
 
             if ($value === null) continue;
             if ($value instanceof VoidValue) continue;
-            if (is_bool($value)) continue;
+            if (is_bool($value)) echo $value ? 'basst' : 'sichaned';
             if (is_object($value) && !method_exists($value, '__toString')) continue;
             $output .= $value;
         }
 
+        if(is_array($value) || is_object($value)) print_r($value);
         echo $output;
         return $output;
     }

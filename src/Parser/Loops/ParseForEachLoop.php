@@ -5,6 +5,7 @@ namespace Oida\Parser\Loops;
 use Exception;
 use Oida\AST\Loops\ForEachLoopNode;
 use Oida\Parser\BaseParser;
+use Oida\Parser\Expressions\ParseExpression;
 use Oida\Parser\ParseCodeBlock;
 
 class ParseForEachLoop extends BaseParser
@@ -18,14 +19,27 @@ class ParseForEachLoop extends BaseParser
 
         if (!$this->match('T_FOREACH')) return null;
         $this->expect('T_OPENING_PARENTHESIS');
-        $this->expect('T_IDENTIFIER');
 
-        $arrayName = $this->tokens[$this->currentIndex - 1][1];
+        $expr = (new ParseExpression($this->tokens))->parse($this->currentIndex);
+        if (!$expr) throw new Exception("🛑 Ausdruck für Array ungültig");
+
+        [$arrayNode, $this->currentIndex] = $expr;
 
         $this->expect('T_AS');
-        $this->expect('T_IDENTIFIER');
 
-        $itemName = $this->tokens[$this->currentIndex - 1][1];
+        $itemName = null;
+        $keyName = null;
+
+        $this->expect('T_IDENTIFIER');
+        $firstName = $this->tokens[$this->currentIndex - 1][1];
+
+        if ($this->match('T_ARROW')) {
+            $this->expect('T_IDENTIFIER');
+            $keyName = $firstName;
+            $itemName = $this->tokens[$this->currentIndex - 1][1];
+        } else {
+            $itemName = $firstName;
+        }
 
         $this->expect('T_CLOSING_PARENTHESIS');
         $this->expect('T_OPENING_BRACE');
@@ -33,7 +47,7 @@ class ParseForEachLoop extends BaseParser
         [$body, $this->currentIndex] = (new ParseCodeBlock($this->tokens))->parse($this->currentIndex);
         $this->expect('T_CLOSING_BRACE');
 
-        return [new ForEachLoopNode($arrayName, $itemName, $body), $this->currentIndex];
+        return [new ForEachLoopNode($arrayNode, $itemName, $body, $keyName), $this->currentIndex];
 
     }
 

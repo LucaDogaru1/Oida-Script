@@ -21,7 +21,7 @@ class TokenizerClassTest extends ParserTestCase
         $tokens = $this->tokenize(":");
         $token = $tokens[0];
 
-        $this->assertEquals('T_CLASS_PROPERTY_ACCESS', $token[0]);
+        $this->assertEquals('T_COLON', $token[0]);
     }
 
     public function test_class_new_token()

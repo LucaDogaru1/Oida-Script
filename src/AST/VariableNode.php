@@ -3,7 +3,7 @@
 namespace Oida\AST;
 
 use Exception;
-use Oida\AST\ASTNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Environment\Environment;
 
 class VariableNode extends ASTNode

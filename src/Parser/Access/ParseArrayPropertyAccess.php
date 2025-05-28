@@ -10,6 +10,30 @@ use Oida\Parser\Expressions\ParseExpression;
 class ParseArrayPropertyAccess extends BaseParser
 {
 
+    private array $allowedProperties = [
+        'anzahl',
+        'leer',
+        'hat',
+        'erstesElement',
+        'letztesElement',
+        'irgendeinElement',
+        'mische',
+        'ohneDuplikat',
+        'sortiere',
+        'sortiereAbsteigend',
+        'indexVon',
+        'flach',
+        'entferne',
+        'gibRein',
+        'ersetz',
+        'kombinier',
+        'zuText',
+        'istZahl',
+        'textHat',
+        'istArray',
+        'istAssoArray'
+    ];
+
     /**
      * @throws Exception
      */
@@ -21,9 +45,15 @@ class ParseArrayPropertyAccess extends BaseParser
         $arrayName = $this->tokens[$this->currentIndex -1][1];
 
         if(!$this->match('T_DOT')) return null;
-        $this->expect('T_IDENTIFIER');
+
+        if(!$this->match('T_IDENTIFIER')) return null;
 
         $propertyName = $this->tokens[$this->currentIndex -1][1];
+
+        //die If abfrage geamcht da es sich sonst mit dem AssoArrayAcces überkreutzt wegen token T_DOT
+        if (!in_array($propertyName, $this->allowedProperties)) {
+            return null;
+        }
 
         if(!$this->match('T_OPENING_PARENTHESIS')) return [new PropertyAccessNode($arrayName, $propertyName, null), $this->currentIndex];
 

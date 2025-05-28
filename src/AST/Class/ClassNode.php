@@ -5,8 +5,7 @@ namespace Oida\AST\Class;
 use AllowDynamicProperties;
 use Exception;
 use Oida\AST\ASTNode;
-use Oida\AST\IdentifierNode;
-use Oida\Environment\ClassInstance;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Environment\Environment;
 
 #[AllowDynamicProperties] class ClassNode extends ASTNode

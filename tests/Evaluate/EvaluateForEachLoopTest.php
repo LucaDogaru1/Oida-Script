@@ -34,4 +34,5 @@ class EvaluateForEachLoopTest extends ParserTestCase
 
         $this->assertEquals('123', $output);
     }
+
 }

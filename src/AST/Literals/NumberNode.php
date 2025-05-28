@@ -1,8 +1,9 @@
 <?php
 
-namespace Oida\AST;
+namespace Oida\AST\Literals;
 
 use AllowDynamicProperties;
+use Oida\AST\ASTNode;
 use Oida\Environment\Environment;
 
 #[AllowDynamicProperties] class NumberNode extends ASTNode

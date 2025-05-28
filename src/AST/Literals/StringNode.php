@@ -1,11 +1,12 @@
 <?php
 
-namespace Oida\AST;
+namespace Oida\AST\Literals;
 
 use AllowDynamicProperties;
+use Oida\AST\ASTNode;
 use Oida\Environment\Environment;
 
- #[AllowDynamicProperties] class StringNode extends ASTNode
+#[AllowDynamicProperties] class StringNode extends ASTNode
 {
 
     protected string $value;

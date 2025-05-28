@@ -73,6 +73,8 @@ class PropertyAccessNode extends ASTNode
             'textHat' => is_string($array) && is_string($value)
                 ? str_contains($array, $value)
                 : $this->throeException('stringHat'),
+            'istArray' =>  is_array($array),
+            'istAssoArray' => is_array($array) && array_keys($array) !== range(0, count($array) - 1),
             default => throw new Exception("🛑 Was soll das für eine Property sein '{$this->property}' für '{$this->arrayName}'"),
         };
     }

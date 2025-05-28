@@ -5,7 +5,7 @@ namespace Oida\Parser\Class;
 
 use Exception;
 use Oida\AST\Class\ClassVariableNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\AST\NullExpressionNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;

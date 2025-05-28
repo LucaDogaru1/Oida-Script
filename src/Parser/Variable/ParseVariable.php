@@ -3,7 +3,7 @@
 namespace Oida\Parser\Variable;
 
 use Exception;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\AST\VariableNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;

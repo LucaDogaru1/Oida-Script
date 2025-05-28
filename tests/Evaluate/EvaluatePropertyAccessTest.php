@@ -476,7 +476,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
     {
         $inputClass = "
         heast x = 123;
-
+        
        oida.sag(x.istZahl);
        ";
 
@@ -489,7 +489,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('', $output);
+        $this->assertEquals('basst1', $output);
     }
 
     /**
@@ -542,7 +542,56 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('', $output);
+        $this->assertEquals('basst1', $output);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_istArray()
+    {
+
+        $inputClass = "
+        heast x = [1,2,3,4];
+        oida.sag(x.istArray);
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals('basst1', $output);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_istAssoArray()
+    {
+        $inputClass = "
+        heast x = {0: 1, 2 : 4};
+        
+        oida.sag(x.istAssoArray);
+      
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals('basst1', $output);
     }
 
 }

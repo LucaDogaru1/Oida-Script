@@ -2,6 +2,7 @@
 
 namespace Tests\Evaluate;
 
+use Exception;
 use Oida\Environment\Environment;
 use Oida\Parser\ParseCodeBlock;
 use Tests\Parser\ParserTestCase;
@@ -9,6 +10,9 @@ use Tests\Parser\ParserTestCase;
 class EvaluateArrayAccessTest extends ParserTestCase
 {
 
+    /**
+     * @throws Exception
+     */
     public function test_array_access()
     {
         $inputClass = "

@@ -3,7 +3,7 @@
 namespace Oida\Parser\Function;
 
 use Exception;
-use Oida\AST\FunctionCallNode;
+use Oida\AST\Function\FunctionCallNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
 

@@ -3,6 +3,7 @@
 namespace Oida\AST;
 
 use Exception;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Environment\Environment;
 
 class BinaryOperationNode extends ASTNode

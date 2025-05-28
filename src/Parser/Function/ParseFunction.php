@@ -3,8 +3,8 @@
 namespace Oida\Parser\Function;
 
 use Exception;
-use Oida\AST\FunctionNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Function\FunctionNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
 use Oida\Parser\ParseCodeBlock;

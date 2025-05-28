@@ -3,14 +3,18 @@
 namespace Oida\Parser;
 
 use Exception;
+use Oida\AST\Database\QueryNode;
+use Oida\AST\Expression\VoidExpressionNode;
 use Oida\AST\HigherOrderFunction\FilterNode;
 use Oida\AST\HigherOrderFunction\MapNode;
+use Oida\Parser\Assignment\ParseAssignment;
 use Oida\Parser\Class\ParseClass;
 use Oida\Parser\Class\ParseClassMethod;
 use Oida\Parser\Class\ParseClassProperty;
 use Oida\Parser\Class\ParseConstructor;
 use Oida\Parser\Class\ParseMethodCall;
 use Oida\Parser\Class\ParseThisKeyWordStatement;
+use Oida\Parser\Database\ParseQuery;
 use Oida\Parser\Expressions\ParseExpression;
 use Oida\Parser\Function\ParseFunction;
 use Oida\Parser\Function\ParseFunctionCall;
@@ -44,6 +48,9 @@ class ParseStatement extends BaseParser
         $thisKeywordStatement = (new ParseThisKeyWordStatement($this->tokens))->parse($this->currentIndex);
         if($thisKeywordStatement)  return $thisKeywordStatement;
 
+        $query = (new ParseQuery($this->tokens))->parse($this->currentIndex, false);
+        if ($query) return $query;
+
         $method = (new ParseClassMethod($this->tokens))->parse($this->currentIndex);
         if($method) return $method;
 
@@ -61,6 +68,9 @@ class ParseStatement extends BaseParser
 
         $variable = (new ParseVariable($this->tokens))->parse($this->currentIndex);
         if($variable) return $variable;
+
+        $assignment = (new ParseAssignment($this->tokens))->parse($this->currentIndex);
+        if($assignment) return $assignment;
 
         $print = (new ParsePrint($this->tokens))->parse($this->currentIndex);
         if($print) return $print;
@@ -82,7 +92,6 @@ class ParseStatement extends BaseParser
             if ($expression[0] instanceof MapNode || $expression[0] instanceof FilterNode) {
                 throw new Exception("🛑 \033[1;31m'map'\033[0m oder \033[1;31m'filter'\033[0m darfst du nicht einfach so stehen lassen. \033[1;33mPack's in eine Variable, mein Bester.\033[0m");
             }
-
             return $expression;
         }
 

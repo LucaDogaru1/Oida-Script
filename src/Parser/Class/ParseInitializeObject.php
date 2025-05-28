@@ -4,8 +4,7 @@ namespace Oida\Parser\Class;
 
 use Exception;
 use Oida\AST\Class\ObjectNode;
-use Oida\AST\IdentifierNode;
-use Oida\Environment\Environment;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
 

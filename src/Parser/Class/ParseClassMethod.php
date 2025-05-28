@@ -2,11 +2,10 @@
 
 namespace Oida\Parser\Class;
 
-use AllowDynamicProperties;
 use Exception;
 use Oida\AST\Class\ConstructorNode;
 use Oida\AST\Class\MethodNode;
-use Oida\AST\IdentifierNode;
+use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
 use Oida\Parser\ParseCodeBlock;

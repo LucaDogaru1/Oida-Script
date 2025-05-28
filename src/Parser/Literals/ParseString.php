@@ -3,7 +3,7 @@
 namespace Oida\Parser\Literals;
 
 use Exception;
-use Oida\AST\StringNode;
+use Oida\AST\Literals\StringNode;
 use Oida\Parser\BaseParser;
 
 class ParseString extends BaseParser

@@ -3,7 +3,7 @@
 namespace Oida\Parser\Literals;
 
 use Exception;
-use Oida\AST\NumberNode;
+use Oida\AST\Literals\NumberNode;
 use Oida\Parser\BaseParser;
 
 class ParseNumber extends BaseParser
