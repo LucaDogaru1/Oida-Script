@@ -28,7 +28,7 @@ class EvaluateBinaryOperationTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('4',$output );
+        $this->assertEquals("4\n",$output );
     }
 
     public function test_2_plus_2_mal_5_plus_10_durch_10_prio_soll_beachtet_werden_und_ergebnis_13()
@@ -46,7 +46,7 @@ class EvaluateBinaryOperationTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('13',$output );
+        $this->assertEquals("13\n",$output );
     }
 
     /**
@@ -68,6 +68,6 @@ class EvaluateBinaryOperationTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('8',$output );
+        $this->assertEquals("8\n",$output );
     }
 }

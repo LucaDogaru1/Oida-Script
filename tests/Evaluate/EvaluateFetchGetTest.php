@@ -30,7 +30,7 @@ class EvaluateFetchGetTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("1", $output);
+        $this->assertEquals("1\n", $output);
     }
 
 }

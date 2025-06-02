@@ -145,7 +145,7 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("12", $output);
+        $this->assertEquals("12\n", $output);
     }
 
     /**
@@ -169,7 +169,7 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("14", $output);
+        $this->assertEquals("14\n", $output);
     }
 
 
@@ -198,7 +198,7 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("3", $output);
+        $this->assertEquals("3\n", $output);
     }
 
     /**
@@ -231,7 +231,7 @@ class EvaluateObjectTest extends ParserTestCase
         $output = ob_get_clean();
 
 
-        $this->assertEquals("6", $output);
+        $this->assertEquals("6\n", $output);
     }
 
 
@@ -269,7 +269,7 @@ class EvaluateObjectTest extends ParserTestCase
 
         $output = ob_get_clean();
 
-        $this->assertEquals("65", $output);
+        $this->assertEquals("6\n5\n", $output);
     }
 
     /**
@@ -315,7 +315,7 @@ class EvaluateObjectTest extends ParserTestCase
 
         $output = ob_get_clean();
 
-        $this->assertEquals("bwm3210audi1300", $output);
+        $this->assertEquals("bwm3210\naudi1300\n", $output);
     }
 
 
@@ -379,7 +379,7 @@ class EvaluateObjectTest extends ParserTestCase
         $output = ob_get_clean();
 
 
-        $this->assertEquals('5', $output);
+        $this->assertEquals("5\n", $output);
     }
 
 
@@ -412,7 +412,7 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('5', $output);
+        $this->assertEquals("5\n", $output);
     }
 
 

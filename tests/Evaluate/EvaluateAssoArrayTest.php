@@ -32,7 +32,7 @@ class EvaluateAssoArrayTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('0112', $output);
+        $this->assertEquals("0\n1\n1\n2\n", $output);
     }
 
     public function test_foreach_loop_with_asso_array_with_value_array()
@@ -54,7 +54,7 @@ class EvaluateAssoArrayTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('123', $output);
+        $this->assertEquals("123\n", $output);
     }
 
 
@@ -83,7 +83,7 @@ class EvaluateAssoArrayTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('Max', $output);
+        $this->assertEquals("Max\n", $output);
     }
 
 
@@ -111,7 +111,7 @@ class EvaluateAssoArrayTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('10', $output);
+        $this->assertEquals("1\n0\n", $output);
     }
 
 

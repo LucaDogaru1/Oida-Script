@@ -32,7 +32,7 @@ class EvaluateFunctionTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('6', $output);
+        $this->assertEquals("6\n", $output);
     }
 
     /**
@@ -57,7 +57,7 @@ class EvaluateFunctionTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('6', $output);
+        $this->assertEquals("6\n", $output);
     }
 
     public function test_void_function_displaying_6_and_7_with_parameter()
@@ -79,7 +79,7 @@ class EvaluateFunctionTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('67', $output);
+        $this->assertEquals("67\n", $output);
     }
 
     /**
@@ -105,7 +105,7 @@ class EvaluateFunctionTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('8', $output);
+        $this->assertEquals("8\n", $output);
     }
 
     public function test_void_function_stored_in_variable_should_throw_exception()

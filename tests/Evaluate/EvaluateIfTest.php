@@ -31,7 +31,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -56,7 +56,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     public function test_if_condition_x_euqals_10_prints_yes()
@@ -78,7 +78,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -103,7 +103,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -128,7 +128,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -153,7 +153,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -178,7 +178,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -206,7 +206,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -237,7 +237,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -270,7 +270,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
     /**
      * @throws Exception
@@ -293,7 +293,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('yes', $output);
+        $this->assertEquals("yes\n", $output);
     }
 
     /**
@@ -322,7 +322,7 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('5', $output);
+        $this->assertEquals("5\n", $output);
     }
 
 }

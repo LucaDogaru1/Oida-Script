@@ -29,7 +29,7 @@ class EvaluateForLoopTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('0123456789', $output);
+        $this->assertEquals("0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n", $output);
 
     }
 
@@ -54,7 +54,7 @@ class EvaluateForLoopTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1234', $output);
+        $this->assertEquals("1\n2\n3\n4\n", $output);
     }
 
 }

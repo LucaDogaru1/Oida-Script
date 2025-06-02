@@ -32,7 +32,7 @@ class EvaluateForEachLoopTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('123', $output);
+        $this->assertEquals("1\n2\n3\n", $output);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace Oida\Parser\Class;
 
+use Exception;
 use Oida\AST\Class\MethodCallNode;
 use Oida\AST\Literals\IdentifierNode;
 use Oida\Parser\BaseParser;
@@ -11,7 +12,7 @@ class ParseMethodCall extends BaseParser
 {
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse(int $tokenIndex, bool $isStatement = false): ?array
     {

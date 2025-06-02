@@ -31,6 +31,6 @@ class EvaluateMapTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('246810', $output);
+        $this->assertEquals("2\n4\n6\n8\n10\n", $output);
     }
 }

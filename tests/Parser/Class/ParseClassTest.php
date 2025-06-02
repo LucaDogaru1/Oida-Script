@@ -17,7 +17,7 @@ class ParseClassTest extends ParserTestCase
         $tokens = $this->tokenize(
 
             "klasse yo {
-öffentlich test = 2;
+öffentlich na = 2;
 }"
 
         );
@@ -30,7 +30,7 @@ class ParseClassTest extends ParserTestCase
             $variable[$property->getName()] = $property->getValue()->getValue();
         }
 
-        $this->assertEquals(["test" => 2], $variable);
+        $this->assertEquals(["na" => 2], $variable);
     }
 
     /**

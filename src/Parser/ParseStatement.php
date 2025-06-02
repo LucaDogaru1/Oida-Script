@@ -19,11 +19,14 @@ use Oida\Parser\Expressions\ParseExpression;
 use Oida\Parser\Function\ParseFunction;
 use Oida\Parser\Function\ParseFunctionCall;
 use Oida\Parser\IfStatement\ParseIfStatement;
+use Oida\Parser\Import\ParseImport;
 use Oida\Parser\Loops\ParseForEachLoop;
 use Oida\Parser\Loops\ParseForLoop;
 use Oida\Parser\Loops\ParseWhileLoop;
 use Oida\Parser\Print\ParsePrint;
 use Oida\Parser\Return\ParseReturn;
+use Oida\Parser\Test\ParseAssert;
+use Oida\Parser\Test\ParseTest;
 use Oida\Parser\Variable\ParseVariable;
 
 class ParseStatement extends BaseParser
@@ -38,6 +41,9 @@ class ParseStatement extends BaseParser
 
         $return = (new ParseReturn($this->tokens))->parse($this->currentIndex);
         if ($return) return $return;
+
+        $import = (new ParseImport($this->tokens))->parse($this->currentIndex);
+        if($import) return $import;
 
         $class = (new ParseClass($this->tokens))->parse($this->currentIndex);
         if($class) return $class;
@@ -86,6 +92,12 @@ class ParseStatement extends BaseParser
 
         $forEach = (new ParseForEachLoop($this->tokens))->parse($this->currentIndex);
         if($forEach) return $forEach;
+
+        $test = (new ParseTest($this->tokens))->parse($this->currentIndex);
+        if($test) return $test;
+
+        $assert = (new ParseAssert($this->tokens))->parse($this->currentIndex);
+        if($assert) return $assert;
 
         $expression = (new ParseExpression($this->tokens))->parse($this->currentIndex);
         if ($expression) {

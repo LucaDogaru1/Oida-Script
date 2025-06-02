@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+use Oida\Environment\Environment;
+use Oida\Interpreter\Interpreter;
+
+$fileName = $_SERVER['argv'][1];
+
+if (str_ends_with($fileName, '.oida')) {
+    $fileContent = file_get_contents($fileName);
+    $env = new Environment();
+    $interpreter = new Interpreter($fileContent, $env);
+
+    $interpreter->evaluate();
+} else {
+    echo "Error: The file must have the '.oida' extension.\n";
+}
+
+

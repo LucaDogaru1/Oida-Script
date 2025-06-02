@@ -31,6 +31,7 @@ class EvaluateWhileLoopTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('0123456789', $output);
+        $expected = implode("\n", range(0, 9));
+        $this->assertEquals($expected, trim($output));
     }
 }

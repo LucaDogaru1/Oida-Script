@@ -59,6 +59,7 @@ class Lexer
             'T_METHOD' => '/\bhawara\b/',
             'T_RETURN' => '/\bspeicher\b/',
             'T_COMMENT' => '/\bkommentar\b/',
+            'T_IMPORT' => '/\bimport\b/',
             'T_IDENTIFIER' => '/[a-zA-Z_]\w*/',
         ];
     }

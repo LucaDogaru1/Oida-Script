@@ -30,7 +30,7 @@ class PrintNode extends ASTNode
         }
 
         if(is_array($value) || is_object($value)) print_r($value);
-        echo $output;
+        echo $output ."\n";
         return $output;
     }
 

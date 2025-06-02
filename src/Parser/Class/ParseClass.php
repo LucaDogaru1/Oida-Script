@@ -39,6 +39,7 @@ class ParseClass extends BaseParser
 
         $classNode = new ClassNode($className, $methods, $properties, $constructor);
 
+
         return [$classNode, $this->currentIndex];
     }
 

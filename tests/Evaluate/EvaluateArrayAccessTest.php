@@ -30,6 +30,6 @@ class EvaluateArrayAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('3', $output);
+        $this->assertEquals("3\n", $output);
     }
 }

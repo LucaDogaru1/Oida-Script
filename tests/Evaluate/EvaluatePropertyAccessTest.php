@@ -26,7 +26,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('4', $output);
+        $this->assertEquals("4\n", $output);
     }
 
     public function test_property_access_empty()
@@ -50,7 +50,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('5', $output);
+        $this->assertEquals("5\n", $output);
     }
 
     /**
@@ -77,7 +77,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('3', $output);
+        $this->assertEquals("3\n", $output);
     }
 
     /**
@@ -100,7 +100,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1', $output);
+        $this->assertEquals("1\n", $output);
     }
 
     /**
@@ -125,7 +125,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('4', $output);
+        $this->assertEquals("4\n", $output);
     }
 
 
@@ -153,7 +153,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertNotEquals('1234', $output);
+        $expected = implode("\n", range(0, 4));
+        $this->assertNotEquals($expected, trim($output));
     }
 
 
@@ -181,7 +182,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1234', $output);
+        $expected = implode("\n", $env->getVariable("new"));
+        $this->assertEquals($expected, trim($output));
     }
 
 
@@ -209,7 +211,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1234', $output);
+        $expected = implode("\n", $env->getVariable("new"));
+        $this->assertEquals($expected, trim($output));
     }
 
     /**
@@ -236,7 +239,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('4321', $output);
+        $expected = implode("\n", $env->getVariable("new"));
+        $this->assertEquals($expected, trim($output));
     }
 
     /**
@@ -259,7 +263,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('2', $output);
+        $this->assertEquals("2\n", $output);
     }
 
 
@@ -286,7 +290,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('123456', $output);
+        $expected = implode("\n", $env->getVariable("new"));
+        $this->assertEquals($expected, trim($output));
     }
 
     /**
@@ -312,7 +317,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('134', $output);
+        $expected = implode("\n", [1, 3, 4]);
+        $this->assertEquals($expected, trim($output));
     }
 
     /**
@@ -338,7 +344,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('12345', $output);
+        $expected = implode("\n",$env->getVariable("new"));
+        $this->assertEquals($expected, trim($output));
     }
 
 
@@ -365,7 +372,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1534', $output);
+        $expected = implode("\n", [1, 5, 3, 4]);
+        $this->assertEquals($expected, trim($output));
     }
 
     /**
@@ -392,7 +400,8 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1234567', $output);
+        $expected = implode("\n", $env->getVariable("new"));
+        $this->assertEquals($expected, trim($output));
     }
 
     /**
@@ -416,7 +425,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1234', $output);
+        $this->assertEquals("1234\n", $output);
     }
 
     /**
@@ -442,7 +451,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('1-2-3-4', $output);
+        $this->assertEquals("1-2-3-4\n", $output);
     }
 
     /**
@@ -466,7 +475,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('123', $output);
+        $this->assertEquals("123\n", $output);
     }
 
     /**
@@ -489,7 +498,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('basst1', $output);
+        $this->assertEquals("basst1\n", $output);
     }
 
     /**
@@ -515,7 +524,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('2', $output);
+        $this->assertEquals("2\n", $output);
     }
 
 
@@ -542,7 +551,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('basst1', $output);
+        $this->assertEquals("basst1\n", $output);
     }
 
     /**
@@ -565,7 +574,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('basst1', $output);
+        $this->assertEquals("basst1\n", $output);
     }
 
 
@@ -591,7 +600,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals('basst1', $output);
+        $this->assertEquals("basst1\n", $output);
     }
 
 }
