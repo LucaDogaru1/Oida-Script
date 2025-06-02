@@ -179,10 +179,10 @@ class EvaluateObjectTest extends ParserTestCase
     public function test_class_with_class_variable_and_printing_instance_variable_on_method_call()
     {
         $inputClass = "klasse OPA{
-        privat test = 3;
+        privat yo = 3;
         
         öffentlich hawara KOMM() {
-        oida.sag(this:test);
+        oida.sag(this:yo);
          }
       }
         heast joa = neu OPA();
@@ -207,14 +207,14 @@ class EvaluateObjectTest extends ParserTestCase
     public function test_class_with_constructor_and_printing_instance_variable_on_method_call_after_parsing_value_to_constructor()
     {
         $inputClass = "klasse OMA{
-        privat testConstructor = 0;
+        privat yoConstructor = 0;
         
-        BauMeister(testConstructor) {
-        this:testConstructor = testConstructor;
+        BauMeister(yoConstructor) {
+        this:testConstructor = yoConstructor;
         }
         
         öffentlich hawara HUHU() {
-        oida.sag(this:testConstructor);
+        oida.sag(this:yoConstructor);
          }
       }
         heast nah = neu OMA(6);
@@ -241,14 +241,14 @@ class EvaluateObjectTest extends ParserTestCase
     public function test_class_with_constructor_and_2_different_instance_and_2_different_value_output()
     {
         $inputClass = "klasse HAI{
-        privat testConstructor = 0;
+        privat yoConstructor = 0;
         
-        BauMeister(testConstructor) {
-        this:testConstructor = testConstructor;
+        BauMeister(yoConstructor) {
+        this:yoConstructor = yoConstructor;
         }
         
         öffentlich hawara SICHA() {
-        oida.sag(this:testConstructor);
+        oida.sag(this:yoConstructor);
          }
       }
         heast nah = neu HAI(6);
@@ -423,10 +423,10 @@ class EvaluateObjectTest extends ParserTestCase
     {
 
         $inputClass = "klasse tun{
-        privat test = 7;
+        privat yo = 7;
 
          öffentlich hawara HHH(){
-         speicher this:test;
+         speicher this:yo;
          }
       }
       

@@ -68,4 +68,9 @@ class IdentifierNode extends ASTNode
             }
         }
     }
+
+    public function toPHP(): string
+    {
+        return '$' . $this->name;
+    }
 }

@@ -54,6 +54,8 @@ class Lexer
         return [
             'T_PRINT' => '/\boida\.sag\b/',
             'T_LET' => '/\bheast\b/',
+            'T_TEST' => '/\btest\b/',
+            'T_ASSERT' => '/\bschau\b/',
             'T_METHOD' => '/\bhawara\b/',
             'T_RETURN' => '/\bspeicher\b/',
             'T_COMMENT' => '/\bkommentar\b/',

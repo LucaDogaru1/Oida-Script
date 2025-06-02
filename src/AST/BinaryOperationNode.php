@@ -54,4 +54,19 @@ class BinaryOperationNode extends ASTNode
             default => throw new Exception("🛑 \033[1;31mWas willstn mit so einem Operator anfangen?\033[0m \033[1;97m'{$this->operator}'\033[0m \033[1;31mis")
         };
     }
+
+    /**
+     * @throws Exception
+     */
+    public function toPHP(): string {
+        $phpOperator = match ($this->operator) {
+            'plus'  => '+',
+            'minus' => '-',
+            'mal'   => '*',
+            'durch' => '/',
+            default => throw new \Exception("Unbekannter Operator: {$this->operator}")
+        };
+
+        return '(' . $this->left->toPHP() . ' ' . $phpOperator . ' ' . $this->right->toPHP() . ')';
+    }
 }

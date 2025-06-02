@@ -35,7 +35,7 @@ class EvaluateQueryTest extends ParserTestCase
         $rows = $env->getVariable("rows");
 
         $this->assertIsArray($rows);
-        $this->assertCount(5, $rows);
+        $this->assertCount(7, $rows);
         $this->assertEquals("Max", $rows[0]["name"]);
     }
 }
