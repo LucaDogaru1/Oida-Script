@@ -55,18 +55,5 @@ class BinaryOperationNode extends ASTNode
         };
     }
 
-    /**
-     * @throws Exception
-     */
-    public function toPHP(): string {
-        $phpOperator = match ($this->operator) {
-            'plus'  => '+',
-            'minus' => '-',
-            'mal'   => '*',
-            'durch' => '/',
-            default => throw new \Exception("Unbekannter Operator: {$this->operator}")
-        };
 
-        return '(' . $this->left->toPHP() . ' ' . $phpOperator . ' ' . $this->right->toPHP() . ')';
-    }
 }

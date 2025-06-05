@@ -45,7 +45,4 @@ class VariableNode extends ASTNode
         return $this->value;
     }
 
-    public function toPHP(): string {
-        return '$' . $this->name->getName() . ' = ' . $this->value->toPHP() . ';';
-    }
 }

@@ -28,6 +28,7 @@ class ParseAssert extends BaseParser
         [$right, $this->currentIndex] = $exprParser->parse($this->currentIndex);
 
         $this->expect('T_CLOSING_PARENTHESIS');
+        $this->expect('T_LINE_END');
 
         return [new AssertNode($left, $operatorToken, $right), $this->currentIndex];
     }

@@ -29,7 +29,4 @@ use Oida\Environment\Environment;
         return $this->value;
     }
 
-    public function toPHP(): string {
-        return (string)$this->value;
-    }
 }

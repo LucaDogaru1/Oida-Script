@@ -86,9 +86,4 @@ class MethodCallNode extends ASTNode
         return $this->methodName->getName();
     }
 
-    public function toPHP(): string
-    {
-        $argsPhp = array_map(fn($arg) => $arg->toPHP(), $this->args);
-        return $this->object->toPHP() . '->' . $this->methodName->getName() . '(' . implode(', ', $argsPhp) . ');';
-    }
 }

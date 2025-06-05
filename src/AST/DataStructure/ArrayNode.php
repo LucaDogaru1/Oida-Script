@@ -25,9 +25,4 @@ class ArrayNode extends ASTNode
        return $evaluated;
     }
 
-    public function toPHP(): string
-    {
-        $items = array_map(fn($value) => $value->toPHP(), $this->values);
-        return '[' . implode(', ', $items) . ']';
-    }
 }
