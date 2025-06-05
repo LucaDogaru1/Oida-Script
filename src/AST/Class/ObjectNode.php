@@ -49,7 +49,7 @@ class ObjectNode extends ASTNode
             $constructorNode = $classDef['constructor'];
             $evaluatedArgs = [];
             foreach ($this->constructorArguments as $argNode) {
-                $evaluatedArgs[] = $argNode->evaluate($env);  // ⬅️ hier findet z. B. lookup von "scoda" statt
+                $evaluatedArgs[] = $argNode->evaluate($env);
             }
             $constructorNode->setEvaluatedArgs($evaluatedArgs);;
 

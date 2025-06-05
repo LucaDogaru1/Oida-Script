@@ -43,7 +43,7 @@ class Interpreter
         $lexer = new Lexer($this->fileContent);
         $tokens = $lexer->tokenize();
 
-        [$node, $_] = (new ParseCodeBlock($tokens))->parse(0);
+        [$node, $_] = (new ParseCodeBlock($tokens, $this->env))->parse(0);
         $this->ast = $node;
     }
 

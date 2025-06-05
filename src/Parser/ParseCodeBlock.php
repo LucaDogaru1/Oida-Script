@@ -18,7 +18,7 @@ class ParseCodeBlock extends BaseParser
         $statements = [];
 
         while(true) {
-            $statement = (new ParseStatement($this->tokens))->parse($this->currentIndex);
+            $statement = (new ParseStatement($this->tokens, $this->env))->parse($this->currentIndex);
             if(!$statement) break;
             $statements[] = $statement[0];
             $this->currentIndex = $statement[1];

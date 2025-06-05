@@ -57,7 +57,7 @@ class ParseClass extends BaseParser
         while (true) {
             if ($this->match('T_CLOSING_BRACE')) break;
 
-            [$statement, $this->currentIndex] = (new ParseStatement($this->tokens))->parse($this->currentIndex);
+            [$statement, $this->currentIndex] = (new ParseStatement($this->tokens, $this->env))->parse($this->currentIndex);
 
             if ($statement instanceof MethodNode) {
                 $methods[] = $statement;

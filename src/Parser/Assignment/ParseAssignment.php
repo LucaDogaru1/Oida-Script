@@ -4,11 +4,17 @@ namespace Oida\Parser\Assignment;
 
 use Exception;
 use Oida\AST\Assignment\AssignmentNode;
+use Oida\AST\Literals\IdentifierNode;
+use Oida\Environment\Environment;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;
 
 class ParseAssignment extends BaseParser
 {
+
+    public function __construct(array $tokens, ?Environment $env = null) {
+        parent::__construct($tokens, $env);
+    }
 
     /**
      * @throws Exception
@@ -18,7 +24,7 @@ class ParseAssignment extends BaseParser
         $this->currentIndex = $tokenIndex;
 
         if(!$this->match('T_IDENTIFIER')) return null;
-        $variableName = $this->tokens[$this->currentIndex -1][1];
+        $left = $this->tokens[$this->currentIndex -1][1];
 
         if(!$this->match('T_ASSIGN')) return null;
 
@@ -30,7 +36,7 @@ class ParseAssignment extends BaseParser
 
         $this->expect('T_LINE_END');
 
-        return [new AssignmentNode($variableName, $valueNode), $this->currentIndex];
+        return [new AssignmentNode($left, $valueNode), $this->currentIndex];
     }
 
 }

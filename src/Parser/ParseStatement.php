@@ -3,10 +3,12 @@
 namespace Oida\Parser;
 
 use Exception;
+use http\Env;
 use Oida\AST\Database\QueryNode;
 use Oida\AST\Expression\VoidExpressionNode;
 use Oida\AST\HigherOrderFunction\FilterNode;
 use Oida\AST\HigherOrderFunction\MapNode;
+use Oida\Environment\Environment;
 use Oida\Parser\Assignment\ParseAssignment;
 use Oida\Parser\Class\ParseClass;
 use Oida\Parser\Class\ParseClassMethod;
@@ -75,7 +77,7 @@ class ParseStatement extends BaseParser
         $variable = (new ParseVariable($this->tokens))->parse($this->currentIndex);
         if($variable) return $variable;
 
-        $assignment = (new ParseAssignment($this->tokens))->parse($this->currentIndex);
+        $assignment = (new ParseAssignment($this->tokens, $this->env))->parse($this->currentIndex);
         if($assignment) return $assignment;
 
         $print = (new ParsePrint($this->tokens))->parse($this->currentIndex);

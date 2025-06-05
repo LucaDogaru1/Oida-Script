@@ -3,16 +3,20 @@
 namespace Oida\Parser;
 
 use Exception;
+use Oida\Environment\Environment;
 
 abstract class BaseParser
 {
     protected array $tokens;
     protected int $currentIndex = 0;
     protected static ?string $globalContext = null;
+    protected ?Environment $env;
 
-    public function __construct(array $tokens)
+
+    public function __construct(array $tokens, ?Environment $env = null)
     {
         $this->tokens = $tokens;
+        $this->env = $env;
     }
 
     protected function advance(): void

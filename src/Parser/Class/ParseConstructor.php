@@ -3,6 +3,7 @@
 namespace Oida\Parser\Class;
 
 use Exception;
+use Oida\AST\Assignment\AssignmentNode;
 use Oida\AST\Class\ConstructorNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\HelperMethods\HelperMethods;
@@ -30,7 +31,13 @@ class ParseConstructor extends BaseParser
 
         $this->expect('T_OPENING_BRACE');
 
-        [$body, $this->currentIndex] = (new ParseCodeBlock($this->tokens))->parse($this->currentIndex);
+        [$body, $this->currentIndex] = (new ParseCodeBlock($this->tokens, $this->env))->parse($this->currentIndex);
+
+        foreach ($body->getStatements() as $stmt) {
+            if ($stmt instanceof AssignmentNode) {
+                throw new Exception("🛑 \033[1;91mhä?\033[0m Im Konstruktor ned einfach \033[1;93m'x = ...'\033[0m. \033[1;92mthis:x\033[0m, oida.");
+            }
+        }
 
         $this->expect('T_CLOSING_BRACE');
 
