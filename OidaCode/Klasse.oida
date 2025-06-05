@@ -1,0 +1,24 @@
+klasse Car
+{
+        privat marke;
+        privat modell;
+        privat kmh;
+
+        BauMeister(marke, modell, kmh) {
+        this:marke = marke;
+        this:modell = modell;
+        this:kmh = kmh;
+        }
+
+        öffentlich hawara getInfo(){
+        oida.sag(this:marke," ", this:modell, " ",  this:kmh);
+}
+        öffentlich hawara add(){
+        speicher 3 plus 3;
+        }
+
+         }
+}
+
+
+

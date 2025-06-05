@@ -1,0 +1,16 @@
+import "OidaCode/Klasse.oida";
+import "OidaCode/t.oida";
+
+heast bmw = neu Car("bmw", 3, 10);
+heast y = neu Car("audi", 5, 300);
+heast scoda = neu Car("SCODA", 3, 10);
+heast roller = neu Roller(scoda);
+
+bmw gibMa getInfo();
+y gibMa getInfo();
+
+
+roller gibMa holRoller();
+
+
+

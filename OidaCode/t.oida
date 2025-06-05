@@ -1,0 +1,15 @@
+klasse Roller
+{
+        privat car;
+
+        BauMeister(car) {
+            this:car = car;
+        }
+
+        öffentlich hawara holRoller(){
+            this:car gibMa getInfo();
+        }
+}
+
+
+
