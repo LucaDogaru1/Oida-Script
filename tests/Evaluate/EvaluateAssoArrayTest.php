@@ -114,5 +114,52 @@ class EvaluateAssoArrayTest extends ParserTestCase
         $this->assertEquals("1\n0\n", $output);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function test_return_assoArray_in_function()
+    {
+        $inputClass = "
+       hawara ja() {
+       speicher {0: 10, 1: 5};
+       }
+       heast x = ja();
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
+        $this->assertIsArray($env->getVariable("x"));
+    }
+
+//    /**
+//     * @throws Exception
+//     */
+//    public function test_push_value_into_assoArray_key()
+//    {
+//        $name = '"name"';
+//        $luca = '"luca"';
+//        $inputClass = "
+//        heast x = [{{$name}: []}];
+//        x[0].name.gibRein($luca);
+//
+//       ";
+//
+//        $env = new Environment();
+//        $tokens = $this->tokenize($inputClass);
+//        $codeBlock = new ParseCodeBlock($tokens);
+//        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+//
+//
+//        $codeBlockNode->evaluate($env);
+//
+//        $var  = $env->getVariable("x");
+//
+//    }
+
 
 }

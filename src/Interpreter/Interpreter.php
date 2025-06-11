@@ -5,6 +5,7 @@ namespace Oida\Interpreter;
 use Exception;
 use Oida\AST\CodeBlock\CodeBlockNode;
 use Oida\Environment\Environment;
+use Oida\Exceptions\FehlerException;
 use Oida\Lexer\Lexer;
 use Oida\Parser\ParseCodeBlock;
 
@@ -30,7 +31,10 @@ class Interpreter
 
         try {
             $this->ast->evaluate($this->env);
-        } catch (Exception $e) {
+        } catch (FehlerException $e) {
+            echo "\033[1;31m\033[1mFEHLER GEWORFEN:\033[0m \033[1;31m⚠️ \033[1;97m" . $e->getMessage() . "\033[0m\n";
+        }
+        catch (Exception $e) {
             echo "🛑 Fehler im Interpreter: " . $e->getMessage() . "\n";
         }
     }

@@ -45,13 +45,13 @@ class ClassInstance
     /**
      * @throws Exception
      */
-    public function getProperty(string $name): array
+    public function getProperty(string $name): mixed
     {
         if (!isset($this->properties[$name])) {
             throw new Exception("Gibt keine Property mit dem Namen: $name");
         }
 
-        return $this->properties[$name];
+        return $this->properties[$name]['value'] ?? null;
     }
 
     public function setProperty(string $name, $value, $visibility): void

@@ -5,6 +5,7 @@ namespace Oida\Parser;
 use Exception;
 use http\Env;
 use Oida\AST\Database\QueryNode;
+use Oida\AST\Expression\ExpressionStatementNode;
 use Oida\AST\Expression\VoidExpressionNode;
 use Oida\AST\HigherOrderFunction\FilterNode;
 use Oida\AST\HigherOrderFunction\MapNode;
@@ -29,6 +30,7 @@ use Oida\Parser\Print\ParsePrint;
 use Oida\Parser\Return\ParseReturn;
 use Oida\Parser\Test\ParseAssert;
 use Oida\Parser\Test\ParseTest;
+use Oida\Parser\Throw\ParseThrow;
 use Oida\Parser\Variable\ParseVariable;
 
 class ParseStatement extends BaseParser
@@ -43,6 +45,9 @@ class ParseStatement extends BaseParser
 
         $return = (new ParseReturn($this->tokens))->parse($this->currentIndex);
         if ($return) return $return;
+
+        $throw = (new ParseThrow($this->tokens))->parse($this->currentIndex);
+        if ($throw) return $throw;
 
         $import = (new ParseImport($this->tokens))->parse($this->currentIndex);
         if($import) return $import;
@@ -106,7 +111,7 @@ class ParseStatement extends BaseParser
             if ($expression[0] instanceof MapNode || $expression[0] instanceof FilterNode) {
                 throw new Exception("🛑 \033[1;31m'map'\033[0m oder \033[1;31m'filter'\033[0m darfst du nicht einfach so stehen lassen. \033[1;33mPack's in eine Variable, mein Bester.\033[0m");
             }
-            return $expression;
+            return [new ExpressionStatementNode($expression[0]), $expression[1]];
         }
 
 

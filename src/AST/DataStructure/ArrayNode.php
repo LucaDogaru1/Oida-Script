@@ -18,6 +18,7 @@ class ArrayNode extends ASTNode
     public function evaluate(Environment $env): array
     {
         $evaluated = [];
+
        foreach ($this->values as $value) {
            $evaluated[] = $value->evaluate($env);
        }

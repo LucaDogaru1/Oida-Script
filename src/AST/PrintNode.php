@@ -19,18 +19,39 @@ class PrintNode extends ASTNode
     {
         $output = '';
 
+
         foreach ($this->values as $valueNode) {
             $value = $valueNode->evaluate($env);
 
-            if ($value === null) continue;
-            if ($value instanceof VoidValue) continue;
-            if (is_bool($value)) echo $value ? 'basst' : 'sichaned';
-            if (is_object($value) && !method_exists($value, '__toString')) continue;
+            while ($value instanceof ASTNode) {
+                $value = $value->evaluate($env);
+            }
+
+            if ($value === null || $value instanceof VoidValue) continue;
+
+            if (is_bool($value)) {
+                $output .= $value ? 'basst' : 'sichaned';
+                continue;
+            }
+
+            if (is_array($value)) {
+                $output .= print_r($value, true);
+                continue;
+            }
+
+            if (is_object($value)) {
+                if (method_exists($value, '__toString')) {
+                    $output .= (string)$value;
+                } else {
+                    $output .= print_r($value, true);
+                }
+                continue;
+            }
+
             $output .= $value;
         }
 
-        if(is_array($value) || is_object($value)) print_r($value);
-        echo $output ."\n";
+        echo $output . "\n";
         return $output;
     }
 

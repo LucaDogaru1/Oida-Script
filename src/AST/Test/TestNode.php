@@ -7,7 +7,6 @@ use Oida\AST\ASTNode;
 use Oida\AST\CodeBlock\CodeBlockNode;
 use Oida\Environment\Environment;
 use Throwable;
-use function PHPUnit\Framework\assertEquals;
 
 class TestNode extends ASTNode
 {

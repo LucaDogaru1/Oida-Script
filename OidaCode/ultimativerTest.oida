@@ -1,0 +1,75 @@
+klasse Konto {
+  privat name;
+  privat stand;
+  privat transaktionen;
+
+  BauMeister(name) {
+    this:name = name;
+    this:stand = 0;
+    this:transaktionen = [];
+  }
+
+  öffentlich hawara einzahlen(betrag) {
+    this:stand = this:stand plus betrag;
+    this:transaktionen = this:transaktionen.gibRein({"Einzahlung":  betrag});
+  }
+
+  öffentlich hawara abheben(betrag) {
+   wenn (betrag größer this:stand) {
+        fehler("Zu wenig Geld");
+      }
+
+   wenn(this:transaktionen[0].hat("Abhebung")) {
+          this:stand = this:stand minus betrag;
+          this:transaktionen = this:transaktionen[0].Abhebung.gibRein(betrag);
+        }sonst {
+      this:stand = this:stand minus betrag;
+      this:transaktionen = this:transaktionen.gibRein({"Abhebung": [betrag]});
+    }
+  }
+
+  öffentlich hawara kontostand() {
+    oida.sag("Kontostand von ", this:name, ": ", this:stand);
+  }
+
+  öffentlich hawara history() {
+    fürAlles(this:transaktionen als eintrag) {
+        fürAlles(eintrag als eint => betrag) {
+            wenn(betrag.istArray) {
+            oida.sag(eint, ": ", betrag[0]);
+            } sonst {
+            oida.sag(eint, ": ", betrag);
+
+            }
+
+        }
+    }
+  }
+
+  öffentlich hawara machJson() {
+    speicher {
+      "name": this:name,
+      "stand": this:stand,
+      "transaktionen": this:transaktionen
+    };
+  }
+}
+
+
+
+heast konto = neu Konto("Chef");
+konto gibMa einzahlen(100);
+konto gibMa abheben(40);
+konto gibMa kontostand();
+konto gibMa history();
+konto gibMa abheben(20);
+konto gibMa abheben(100);
+
+heast Json = konto gibMa machJson();
+oida.sag(Json.zuJson);
+
+
+
+
+
+

@@ -9,7 +9,6 @@ abstract class BaseParser
 {
     protected array $tokens;
     protected int $currentIndex = 0;
-    protected static ?string $globalContext = null;
     protected ?Environment $env;
 
 
@@ -57,13 +56,4 @@ abstract class BaseParser
         return $token;
     }
 
-    public static function setContext(?string $context): void
-    {
-        self::$globalContext = $context;
-    }
-
-    public static function getContext(): ?string
-    {
-        return self::$globalContext;
-    }
 }

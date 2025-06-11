@@ -309,8 +309,6 @@ class EvaluateIfTest extends ParserTestCase
         speicher 12;
         }
         heast x = hat(5);
-        
-        oida.sag(x);
        ";
 
         $env = new Environment();
@@ -318,11 +316,106 @@ class EvaluateIfTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
+        $codeBlockNode->evaluate($env);
+
+        $var = $env->getVariable("x");
+        $this->assertEquals("5", $var);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_if_condition_key_exist_in_assoArray_with_property_hat()
+    {
+        $yes = '"yes"';
+        $name = '"name"';
+        $inputClass = "
+       heast x = [{{$name}: 0, 3: 5}];
+       
+       wenn(x[0].hat($name)) {
+        oida.sag($yes);
+       }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
         ob_start();
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("5\n", $output);
+        $this->assertEquals("yes\n", $output);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function test_if_condition_key_exist_in_assoArray()
+    {
+        $yes = '"yes"';
+        $name = '"name"';
+        $inputClass = "
+       heast x = [{{$name}: 1, 3: 5}];
+       
+       wenn(x[0].name) {
+        oida.sag($yes);
+       }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("yes\n", $output);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_if_condition_key_exist_in_assoArray_on_class_instance()
+    {
+        $yes = '"yes"';
+        $name = '"name"';
+        $inputClass = "
+        klasse hund {
+        privat x = [{{$name}: 1, 3: 5}];
+        
+        öffentlich hawara sag() {
+          wenn(this:x[0].name) {
+        oida.sag($yes);
+            }
+        }
+      }
+      
+      heast y = neu hund();
+      
+      y gibMa sag();
+        
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("yes\n", $output);
+    }
 }

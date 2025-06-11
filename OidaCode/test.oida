@@ -25,3 +25,9 @@ heast a = [3,4,5];
 
 schau(a gleich [3,4,5]);
 }
+
+test array(){
+heast a = [3,4,5];
+
+schau(a isned [3,4,5,6]);
+}

@@ -443,7 +443,11 @@ class EvaluateObjectTest extends ParserTestCase
         $codeBlock = new ParseCodeBlock($tokens);
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
 
-        $this->assertEquals('7',  $codeBlockNode->evaluate($env));
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("7\n",  $output);
     }
 
     public function test_should_throw_exception_when_trying_to_store_void_method_on_variable()
@@ -468,6 +472,196 @@ class EvaluateObjectTest extends ParserTestCase
         [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
         $codeBlockNode->evaluate($env);
 
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_condition_mit_this_keyword()
+    {
+        $inputClass = "klasse tun{
+        privat betrag; 
+        
+        BauMeister(betrag) {
+        this:betrag = betrag;
+        }
+        
+         öffentlich hawara HHH(betrag){
+          wenn(this:betrag gleich betrag) {
+          oida.sag(1);
+          } sonst{
+          oida.sag(0);
+          }
+         }
+      }
+        heast jo = neu tun(5);
+        jo gibMa HHH(5);
+        ";
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("1\n",  $output);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_addition_with_instance_variable()
+    {
+        $inputClass = "klasse tun{
+        privat betrag; 
+        
+        BauMeister(betrag) {
+        this:betrag = betrag;
+        }
+        
+         öffentlich hawara add(betrag){
+          this:betrag = this:betrag plus betrag;
+         }
+         
+         öffentlich hawara getBetrag() {
+         speicher this:betrag;
+         }
+      }
+      
+        heast jo = neu tun(5);
+        jo gibMa add(5);
+        heast x = jo gibMa getBetrag();
+        oida.sag(x);
+        ";
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("10\n",  $output);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_basic_values_in_constructor()
+    {
+        $inputClass = "klasse tun{
+        privat betrag; 
+        privat konto;
+        
+        BauMeister(betrag) {
+        this:betrag = betrag;
+        this:konto = 0;
+        }
+        
+         öffentlich hawara add(betrag){
+          this:betrag = this:betrag plus betrag;
+          this:konto = 15;
+         }
+         
+         öffentlich hawara getBetrag() {
+         speicher this:betrag;
+         }
+         
+          öffentlich hawara getKonto() {
+         speicher this:konto;
+         }
+      }
+      
+        heast jo = neu tun(5);
+        jo gibMa add(5);
+        heast betrag = jo gibMa getBetrag();
+        heast konto = jo gibMa getKonto();
+        oida.sag(betrag, konto);
+        ";
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("1015\n",  $output);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function test_array_value_in_constructor()
+    {
+        $inputClass = "klasse tun{
+        privat betrag; 
+        privat konto;
+        privat transaktion;
+        
+        BauMeister(betrag) {
+        this:betrag = betrag;
+        this:konto = 0;
+        this:transaktion = [];
+        }
+        
+         öffentlich hawara add(betrag){
+          this:betrag = this:betrag plus betrag;
+          this:konto = 15;
+          this:transaktion = this:transaktion.gibRein(20);
+         }
+         
+         öffentlich hawara getBetrag() {
+         speicher this:betrag;
+         }
+         
+          öffentlich hawara getKonto() {
+         speicher this:konto;
+         }
+         öffentlich hawara getTransaktion() {
+         speicher this:transaktion;
+         }
+      }
+      
+        heast jo = neu tun(5);
+        jo gibMa add(5);
+        heast betrag = jo gibMa getBetrag();
+        heast konto = jo gibMa getKonto();
+        heast transaktion = jo gibMa getTransaktion();
+        fürAlles(transaktion als t) {
+        oida.sag(t,betrag, konto);
+        }
+        ";
+
+        $env = new Environment();
+
+        $tokens = $this->tokenize($inputClass);
+
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+
+        $this->assertEquals("201015\n",  $output);
     }
 
 }

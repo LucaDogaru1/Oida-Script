@@ -23,13 +23,13 @@ class IdentifierNode extends ASTNode
     {
         $this->checkError($env);
 
+        if ($env->hasVariable($this->name)) {
+            return $env->getVariable($this->name);
+        }
+
         $currentObject = $env->getCurrentObject();
         if ($currentObject && $currentObject->hasProperty($this->name)) {
             return $currentObject->getProperty($this->name);
-        }
-
-        if ($env->hasVariable($this->name)) {
-            return $env->getVariable($this->name);
         }
 
         if ($env->hasClass($this->name)) {
@@ -55,10 +55,10 @@ class IdentifierNode extends ASTNode
     {
         $currentObject = $env->getCurrentObject();
 
-        $notDefined = !$env->hasVariable($this->name)
-            && !$env->hasFunction($this->name)
-            && !$env->hasClass($this->name)
-            && (!$currentObject || !$currentObject->hasProperty($this->name));
+        $notDefined = !$env->hasVariable($this->name) &&
+            !$env->hasFunction($this->name) &&
+            !$env->hasClass($this->name) &&
+            (!$currentObject || !$currentObject->hasProperty($this->name));
 
         if ($notDefined) {
             if ($env->isInConstructor()) {

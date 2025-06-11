@@ -57,4 +57,34 @@ class EvaluateForLoopTest extends ParserTestCase
         $this->assertEquals("1\n2\n3\n4\n", $output);
     }
 
+
+    /**
+     * @throws Exception
+     */
+    public function test_for_loop_loops_over_string()
+    {
+        $word = '"hallo"';
+        $inputClass = "
+        heast x = $word;
+        
+        
+        für(heast i = 0; i klana x.char; i plusplus) {
+        oida.sag(x[i]);
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+
+        $this->assertEquals("h\na\nl\nl\no\n", $output);
+    }
+
+
 }

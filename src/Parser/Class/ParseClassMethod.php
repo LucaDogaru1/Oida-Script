@@ -27,8 +27,10 @@ class ParseClassMethod extends BaseParser
 
         if(!$this->match('T_METHOD')) return null;
 
+
         if(!$this->match('T_IDENTIFIER')) throw new Exception("Du musst der methode schon einen Namen geben ?");
         $methodName = new IdentifierNode($this->tokens[$this->currentIndex - 1][1]);
+
 
         $this->expect('T_OPENING_PARENTHESIS');
 

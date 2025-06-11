@@ -4,16 +4,17 @@ namespace Oida\AST\Access;
 
 use Exception;
 use Oida\AST\ASTNode;
+use Oida\AST\VoidValue;
 use Oida\Environment\Environment;
 
 class PropertyAccessNode extends ASTNode
 {
 
-    private string $arrayName;
+    private ASTNode $arrayName;
     private string $property;
     private mixed $value = null;
 
-    public function __construct(string $arrayName, string $property, mixed $value = null)
+    public function __construct(ASTNode $arrayName, string $property, mixed $value = null)
     {
         $this->arrayName = $arrayName;
         $this->property = $property;
@@ -25,15 +26,22 @@ class PropertyAccessNode extends ASTNode
      */
     public function evaluate(Environment $env)
     {
-        $array = $env->getVariable($this->arrayName);
+        $array = $this->arrayName->evaluate($env);
+
+        if (is_array($array) && isset($array['value']) && is_array($array['value'])) {
+            $array = $array['value'];
+        }
+
         $value = null;
 
         if ($this->value) {
             $value = $this->value instanceof ASTNode ? $this->value->evaluate($env) : $this->value;
         }
 
+
+
         return match ($this->property) {
-            'anzahl' => is_array($array) ? count($array) : $this->throeException('länge'),
+            'anzahl' => is_array($array) ? count($array) : $this->throeException('anzahl'),
             'leer' => is_array($array) ? empty($array) : $this->throeException('leer'),
             'hat' => is_array($array) ? array_key_exists($value, $array) : $this->throeException('hat'),
             'erstesElement' => is_array($array) ? $array[0] : $this->throeException('erstesElement'),
@@ -69,13 +77,25 @@ class PropertyAccessNode extends ASTNode
                 is_object($array) && method_exists($array, '__toString') => (string)$array,
                 default => $this->throeException('zuText'),
             },
+            'zuJson' => match (true) {
+                is_array($array), is_object($array) => json_encode($array, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
+                default => $this->throeException('zuJson')
+            },
+            'decode_json' => fn($args) => json_decode($args[0], true),
             'istZahl' => is_numeric($array),
             'textHat' => is_string($array) && is_string($value)
                 ? str_contains($array, $value)
                 : $this->throeException('stringHat'),
             'istArray' =>  is_array($array),
+            'char' => is_string($array) ? strlen($array) : null,
+            'EXPLODIER' => is_string($array) && !$value ? explode(" ", $array) :  explode($value, $array),
             'istAssoArray' => is_array($array) && array_keys($array) !== range(0, count($array) - 1),
-            default => throw new Exception("🛑 Was soll das für eine Property sein '{$this->property}' für '{$this->arrayName}'"),
+            default => (
+            is_array($array) && array_key_exists($this->property, $array)
+                ? $array[$this->property]
+                : throw new Exception("🛑 Property '{$this->property}' nicht vorhanden.")
+            )
+
         };
     }
 
@@ -85,7 +105,7 @@ class PropertyAccessNode extends ASTNode
      */
     private function throeException(string $text)
     {
-        throw new \Exception("🛑 \033[1;31m'{$this->arrayName}'\033[0m \033[1;97mhat keine property '{$text}',\033[0m \033[1;31mweils halt kein Array is ...\033[0m");
+        throw new \Exception("🛑 \033[1;31m'{$text}'\033[0m \033[1;97mnicht möglich – Ziel ist kein Array oder unterstützt das nicht.\033[0m");
     }
 
     private function flach(array $array): array
@@ -102,6 +122,30 @@ class PropertyAccessNode extends ASTNode
         return $result;
     }
 
+    /**
+     * @throws Exception
+     */
+    private function handleGibRein($target, $value): array
+    {
+
+        if (is_array($target) && array_is_list($target)) {
+            $target[] = $value;
+            return $target;
+        }
+
+        if (is_array($target)) {
+            foreach ($target as $key => $val) {
+                if (is_array($val)) {
+                    $val[] = $value;
+                    $target[$key] = $val;
+                    return $target;
+                }
+            }
+        }
+
+        return $this->throeException($target);
+    }
+
     public function getProperty(): string
     {
         return $this->property;
@@ -109,6 +153,6 @@ class PropertyAccessNode extends ASTNode
 
     public function getArrayName():string
     {
-        return $this->arrayName;
+        return $this->arrayName->getName();
     }
 }

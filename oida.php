@@ -5,9 +5,15 @@ require_once __DIR__ . "/vendor/autoload.php";
 
 use Oida\AST\Test\TestNode;
 use Oida\Environment\Environment;
+use Oida\Exceptions\FehlerException;
 use Oida\Interpreter\Interpreter;
 
 set_exception_handler(function ($e) {
+    if ($e instanceof FehlerException) {
+        fwrite(STDERR, "🛑 Fehler: " . $e->getValue() . "\n");
+        exit(1);
+    }
+
     fwrite(STDERR, "Fatal error: Uncaught Exception: " . $e->getMessage() . "\n");
     exit(1);
 });

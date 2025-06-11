@@ -34,8 +34,21 @@ class Environment
 
     public function defineVariable(string $name, $value): void
     {
-
         $this->variables[$name] = $value;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setVariable(string $name, $value): void
+    {
+        if (array_key_exists($name, $this->variables)) {
+            $this->variables[$name] = $value;
+        } elseif ($this->parent) {
+            $this->parent->setVariable($name, $value);
+        } else {
+            throw new Exception("Variable '$name' ist nicht definiert.");
+        }
     }
 
     /**
@@ -43,6 +56,7 @@ class Environment
      */
     public function getVariable(string $name)
     {
+
         if (array_key_exists($name, $this->variables)) {
             return $this->variables[$name];
         }
@@ -180,7 +194,15 @@ class Environment
 
     public function hasVariable(string $name): bool
     {
-        return isset($this->variables[$name]);
+        if (array_key_exists($name, $this->variables)) {
+            return true;
+        }
+
+        if ($this->parent !== null) {
+            return $this->parent->hasVariable($name);
+        }
+
+        return false;
     }
 
     public function enterConstructor(): void {

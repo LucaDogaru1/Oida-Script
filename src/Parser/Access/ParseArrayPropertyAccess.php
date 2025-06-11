@@ -6,6 +6,7 @@ use Exception;
 use Oida\AST\Access\PropertyAccessNode;
 use Oida\Parser\BaseParser;
 use Oida\Parser\Expressions\ParseExpression;
+use Oida\Parser\Literals\ParseIdentifier;
 
 class ParseArrayPropertyAccess extends BaseParser
 {
@@ -31,7 +32,11 @@ class ParseArrayPropertyAccess extends BaseParser
         'istZahl',
         'textHat',
         'istArray',
-        'istAssoArray'
+        'istAssoArray',
+        'char',
+        'EXPLODIER',
+        'zuJson',
+        'decode_json'
     ];
 
     /**
@@ -42,7 +47,7 @@ class ParseArrayPropertyAccess extends BaseParser
         $this->currentIndex = $tokenIndex;
 
         if(!$this->match('T_IDENTIFIER')) return null;
-        $arrayName = $this->tokens[$this->currentIndex -1][1];
+        [$arrayName, $this->currentIndex] = (new ParseIdentifier($this->tokens))->parse($this->currentIndex - 1);
 
         if(!$this->match('T_DOT')) return null;
 

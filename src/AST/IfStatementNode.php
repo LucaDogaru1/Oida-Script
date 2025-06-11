@@ -5,12 +5,13 @@ namespace Oida\AST;
 use Oida\AST\ASTNode;
 use Oida\AST\CodeBlock\CodeBlockNode;
 use Oida\Environment\Environment;
+use Oida\Exceptions\FehlerException;
 use Oida\Exceptions\ReturnException;
 
 class IfStatementNode extends ASTNode
 {
 
-    private ASTNode  $condition;
+    private ASTNode $condition;
 
     private CodeBlockNode $body;
 
@@ -25,26 +26,31 @@ class IfStatementNode extends ASTNode
         $this->elseBody = $elseBody;
     }
 
-    public function evaluate(Environment $env)
+    public function evaluate(Environment $env): VoidValue
     {
-        if ($this->condition->evaluate($env)) {
-            return $this->body->evaluate($env);
-        }
 
-        if ($this->elseIfBlock) {
-            foreach ($this->elseIfBlock as $block) {
-                $condition = $block['condition'];
-                $body = $block['body'];
-                if ($condition->evaluate($env)) {
-                    return $body->evaluate($env);
+        try {
+            if ($this->condition->evaluate($env)) {
+                return $this->body->evaluate($env);
+            }
+
+            if ($this->elseIfBlock) {
+                foreach ($this->elseIfBlock as $block) {
+                    $condition = $block['condition'];
+                    $body = $block['body'];
+                    if ($condition->evaluate($env)) {
+                        return $body->evaluate($env);
+                    }
                 }
             }
-        }
 
-        if ($this->elseBody) {
-            return $this->elseBody->evaluate($env);
-        }
+            if ($this->elseBody) {
+                return $this->elseBody->evaluate($env);
+            }
 
-        return new VoidValue();
+            return new VoidValue();
+        } catch (FehlerException|ReturnException $e) {
+            throw $e;
+        }
     }
 }

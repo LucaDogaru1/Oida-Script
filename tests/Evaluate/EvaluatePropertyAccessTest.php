@@ -137,9 +137,9 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $inputClass = "
         heast x = [1,2,3,4];
         
-        heast new = x.mische;
+        x.mische;
         
-        fürAlles(new als y){
+        fürAlles(x als y){
         oida.sag(y);
         }
        ";
@@ -328,10 +328,39 @@ class EvaluatePropertyAccessTest extends ParserTestCase
     {
         $inputClass = "
         heast x = [1,2,3,4];
-        heast new = x.gibRein(5);
+        heast y = x.gibRein(5);
+       
+        fürAlles(y als j) {
+        oida.sag(j);
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+        $expected = implode("\n",$env->getVariable("y"));
+
+        $this->assertEquals($expected, trim($output));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_assoArray_gibRein()
+    {
+        $name = '"name"';
+        $key = '"luca"';
+        $inputClass = "
+        heast x = [];
+        heast new = x.gibRein({{$name}: {$key}});
 
         fürAlles(new als y) {
-        oida.sag(y);
+        oida.sag(y.name);
         }
        ";
 
@@ -344,8 +373,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $expected = implode("\n",$env->getVariable("new"));
-        $this->assertEquals($expected, trim($output));
+        $this->assertEquals("luca\n", $output);
     }
 
 
@@ -498,7 +526,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("basst1\n", $output);
+        $this->assertEquals("basst\n", $output);
     }
 
     /**
@@ -551,7 +579,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("basst1\n", $output);
+        $this->assertEquals("basst\n", $output);
     }
 
     /**
@@ -574,7 +602,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("basst1\n", $output);
+        $this->assertEquals("basst\n", $output);
     }
 
 
@@ -600,7 +628,75 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
 
-        $this->assertEquals("basst1\n", $output);
+        $this->assertEquals("basst\n", $output);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_EXPLODIER_ohne_trennzeichen()
+    {
+        $word = '"HALLO WIE"';
+        $inputClass = "
+        heast x = $word;
+        heast new = x.EXPLODIER;
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
+        $this->assertCount(2, $env->getVariable("new"));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_EXPLODIER_mit_trennzeichen()
+    {
+        $zeichen = '"-"';
+        $word = '"HALLO-WIE"';
+        $inputClass = "
+        heast x = $word;
+        heast new = x.EXPLODIER($zeichen);
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
+        $this->assertCount(2, $env->getVariable("new"));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_zuJson()
+    {
+        $inputClass = "
+        heast x = {1: 0, 2: 1};
+        heast new = x.zuJson;
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        $codeBlockNode->evaluate($env);
+
+        $var = $env->getVariable("new");
+        $this->assertJson($var);
+    }
+
 
 }

@@ -41,7 +41,13 @@ class MethodCallNode extends ASTNode
             }
             return new VoidValue();
         } catch (ReturnException $e) {
-            return $e->getValue();
+            $value = $e->getValue();
+
+            if ($value instanceof ASTNode) {
+                return $value->evaluate($localEnv);
+            }
+
+            return $value;
         }
     }
 

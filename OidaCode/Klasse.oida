@@ -13,8 +13,11 @@ klasse Car
         öffentlich hawara getInfo(){
         oida.sag(this:marke," ", this:modell, " ",  this:kmh);
 }
-        öffentlich hawara add(){
-        speicher 3 plus 3;
+
+
+        öffentlich hawara add(betrag){
+         this:kmh = this:kmh plus betrag;
+         oida.sag(this:kmh);
         }
 
          }
