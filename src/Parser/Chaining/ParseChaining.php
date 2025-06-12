@@ -40,6 +40,7 @@ class ParseChaining extends BaseParser
                     $helper = new HelperMethods($this->tokens);
                     [$args, $this->currentIndex] = $helper->checkForMultipleExpressionsInParenthesis($this->currentIndex);
                     $this->expect('T_CLOSING_PARENTHESIS');
+                    $this->expect('T_LINE_END');
 
                     $node = new MethodCallNode($node, $methodName, $args);
                     continue;
