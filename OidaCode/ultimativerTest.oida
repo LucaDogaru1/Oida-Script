@@ -3,47 +3,41 @@ klasse Konto {
   privat stand;
   privat transaktionen;
 
-  BauMeister(name) {
+  BauMeister(name){
     this:name = name;
     this:stand = 0;
     this:transaktionen = [];
   }
 
-  öffentlich hawara einzahlen(betrag) {
+  öffentlich hawara einzahlen(betrag){
     this:stand = this:stand plus betrag;
     this:transaktionen = this:transaktionen.gibRein({"Einzahlung":  betrag});
-  }
+}
 
-  öffentlich hawara abheben(betrag) {
+  öffentlich hawara abheben(betrag){
    wenn (betrag größer this:stand) {
         fehler("Zu wenig Geld");
-      }
-
-   wenn(this:transaktionen[0].hat("Abhebung")) {
-          this:stand = this:stand minus betrag;
-          this:transaktionen = this:transaktionen[0].Abhebung.gibRein(betrag);
-        }sonst {
-      this:stand = this:stand minus betrag;
-      this:transaktionen = this:transaktionen.gibRein({"Abhebung": [betrag]});
-    }
+}
+   this:stand = this:stand minus betrag;
+   this:transaktionen = this:transaktionen.gibRein({"Abhebung": betrag});
   }
 
-  öffentlich hawara kontostand() {
+
+
+  öffentlich hawara kontostand(){
     oida.sag("Kontostand von ", this:name, ": ", this:stand);
   }
 
-  öffentlich hawara history() {
+  öffentlich hawara history(){
     fürAlles(this:transaktionen als eintrag) {
-        fürAlles(eintrag als eint => betrag) {
-            wenn(betrag.istArray) {
-            oida.sag(eint, ": ", betrag[0]);
-            } sonst {
-            oida.sag(eint, ": ", betrag);
-
-            }
-
-        }
-    }
+           fürAlles(eintrag als key => value) {
+            wenn(value.istArray) {
+               fürAlles(value als va) {
+               oida.sag(key, ":",va);
+               }
+            }sonst {oida.sag(key, ":",value);}
+          }
+       }
   }
 
   öffentlich hawara machJson() {
@@ -60,13 +54,14 @@ klasse Konto {
 heast konto = neu Konto("Chef");
 konto gibMa einzahlen(100);
 konto gibMa abheben(40);
+konto gibMa abheben(20);
 konto gibMa kontostand();
 konto gibMa history();
-konto gibMa abheben(20);
-konto gibMa abheben(100);
 
-heast Json = konto gibMa machJson();
-oida.sag(Json.zuJson);
+heast jsonObject = konto gibMa machJson();
+oida.sag("JSONOBJECT: ",jsonObject.zuJson);
+
+
 
 
 

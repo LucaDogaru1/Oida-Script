@@ -35,4 +35,35 @@ class EvaluateForEachLoopTest extends ParserTestCase
         $this->assertEquals("1\n2\n3\n", $output);
     }
 
+
+    /**
+     * @throws Exception
+     */
+    public function test_foreach_loop_assoArray()
+    {
+        $name = '"name"';
+        $max = '"Max"';
+        $inputClass = "
+        heast x = [{{$name} : $max}];
+        
+        fürAlles(x als entry) {
+            fürAlles(entry als key => value){
+                 oida.sag(key);      
+                 oida.sag(value);      
+            }
+        }
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("name\nMax\n", $output);
+    }
+
 }

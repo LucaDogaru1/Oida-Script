@@ -2,10 +2,10 @@ import "OidaCode/Klasse.oida";
 
 test addiere(){
 heast a = 3;
-heast b = 3;
+heast b = 2;
 
 heast car = neu Car(1,1,1);
-heast result = car gibMa add();
+heast result = car gibMa add(4);
 
 schau(a plus b gleich result);
 }

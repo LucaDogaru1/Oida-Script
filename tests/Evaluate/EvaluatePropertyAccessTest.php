@@ -328,9 +328,9 @@ class EvaluatePropertyAccessTest extends ParserTestCase
     {
         $inputClass = "
         heast x = [1,2,3,4];
-        heast y = x.gibRein(5);
+        x = x.gibRein(5);
        
-        fürAlles(y als j) {
+        fürAlles(x als j) {
         oida.sag(j);
         }
        ";
@@ -343,7 +343,7 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         ob_start();
         $codeBlockNode->evaluate($env);
         $output = ob_get_clean();
-        $expected = implode("\n",$env->getVariable("y"));
+        $expected = implode("\n",$env->getVariable("x"));
 
         $this->assertEquals($expected, trim($output));
     }
@@ -357,9 +357,9 @@ class EvaluatePropertyAccessTest extends ParserTestCase
         $key = '"luca"';
         $inputClass = "
         heast x = [];
-        heast new = x.gibRein({{$name}: {$key}});
+        x = x.gibRein({{$name}: {$key}});
 
-        fürAlles(new als y) {
+        fürAlles(x als y ) {
         oida.sag(y.name);
         }
        ";
@@ -696,6 +696,34 @@ class EvaluatePropertyAccessTest extends ParserTestCase
 
         $var = $env->getVariable("new");
         $this->assertJson($var);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_property_access_gibRein_aber_entfernt_key_wenn_schon_vorhanden()
+    {
+        $name = '"name"';
+        $key = '"max"';
+        $luca = '"luca"';
+        $inputClass = "
+        heast x = [{{$name}: $luca}];
+        x = x.gibRein({{$name}: {$key}});
+
+       oida.sag(x[0].name[0]);
+       ";
+
+        $env = new Environment();
+        $tokens = $this->tokenize($inputClass);
+        $codeBlock = new ParseCodeBlock($tokens);
+        [$codeBlockNode, $currentIndex] = $codeBlock->parse(0);
+
+        ob_start();
+        $codeBlockNode->evaluate($env);
+        $output = ob_get_clean();
+
+        $this->assertEquals("luca\n", $output);
+
     }
 
 

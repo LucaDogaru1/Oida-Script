@@ -28,6 +28,7 @@ class PropertyAccessNode extends ASTNode
     {
         $array = $this->arrayName->evaluate($env);
 
+
         if (is_array($array) && isset($array['value']) && is_array($array['value'])) {
             $array = $array['value'];
         }
@@ -63,7 +64,7 @@ class PropertyAccessNode extends ASTNode
             'indexVon' => is_array($array) ? array_search($value, $array) : $this->throeException('indexVon'),
             'flach' => is_array($array) ? $this->flach($array) : $this->throeException('flach'),
             'entferne' => is_array($array) ? array_values(array_filter($array, fn($item) => $item !== $value)) : $this->throeException('entferne'),
-            'gibRein' => is_array($array) ? [...$array, $value] : $this->throeException('gibRein'),
+            'gibRein' => is_array($array) ? $this->gibRein($array, $value) : [$value],
             'ersetz' => is_array($array) && is_array($value) && count($value) === 2
                 ? array_map(fn($item) => $item === $value[0] ? $value[1] : $item, $array)
                 : $this->throeException('ersetze'),
@@ -122,29 +123,28 @@ class PropertyAccessNode extends ASTNode
         return $result;
     }
 
-    /**
-     * @throws Exception
-     */
-    private function handleGibRein($target, $value): array
-    {
 
-        if (is_array($target) && array_is_list($target)) {
-            $target[] = $value;
-            return $target;
-        }
+    function gibRein(array $array, mixed $value): array {
+        if (is_array($value) && count($value) === 1) {
+            $keyToCheck = array_key_first($value);
+            $val = $value[$keyToCheck];
 
-        if (is_array($target)) {
-            foreach ($target as $key => $val) {
-                if (is_array($val)) {
-                    $val[] = $value;
-                    $target[$key] = $val;
-                    return $target;
+            foreach ($array as &$item) {
+                if (isset($item[$keyToCheck])) {
+                    if (is_array($item[$keyToCheck])) {
+                        $item[$keyToCheck][] = $val;
+                    } else {
+                        $item[$keyToCheck] = [$item[$keyToCheck], $val];
+                    }
+                    return $array;
                 }
             }
         }
 
-        return $this->throeException($target);
+        $array[] = $value;
+        return $array;
     }
+
 
     public function getProperty(): string
     {

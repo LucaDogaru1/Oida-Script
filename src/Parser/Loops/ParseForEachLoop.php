@@ -27,7 +27,6 @@ class ParseForEachLoop extends BaseParser
 
         $this->expect('T_AS');
 
-        $itemName = null;
         $keyName = null;
 
         $this->expect('T_IDENTIFIER');

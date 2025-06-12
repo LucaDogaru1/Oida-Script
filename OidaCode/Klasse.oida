@@ -17,7 +17,7 @@ klasse Car
 
         öffentlich hawara add(betrag){
          this:kmh = this:kmh plus betrag;
-         oida.sag(this:kmh);
+         speicher this:kmh;
         }
 
          }

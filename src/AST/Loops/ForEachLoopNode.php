@@ -33,9 +33,6 @@ class ForEachLoopNode extends ASTNode
         $array = $this->arrayName->evaluate($env);
         $local = new Environment($env);
 
-        if (!is_array($array)) {
-            throw new Exception("🛑 '{$this->arrayName}' ist halt kein Array – geht ned mit foreach.");
-        }
 
         foreach ($array as $key => $value) {
             if ($this->keyName !== null) {
