@@ -56,7 +56,6 @@ class ClassInstance
 
     public function setProperty(string $name, $value, $visibility): void
     {
-
         if (is_array($value) && isset($value['value']) && isset($value['visibility'])) {
             $this->properties[$name] = $value;
             return;

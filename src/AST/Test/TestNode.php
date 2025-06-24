@@ -39,6 +39,7 @@ class TestNode extends ASTNode
         $reset = "\e[0m";
 
         echo "🔬 {$white}Test '{$this->name}' wird ausgeführt...{$reset}\n";
+        $env->enterTestContext();
         try {
             foreach ($this->body->getStatements() as $stmt) {
                 $stmt->evaluate($env);
@@ -47,6 +48,8 @@ class TestNode extends ASTNode
         } catch (Throwable $e) {
             self::$failed++;
             echo "{$red}❌ Test '{$this->name}' fehlgeschlagen: {$e->getMessage()}{$reset}\n";
+        } finally {
+            $env->leaveTestContext();
         }
 
         self::$executedTests++;

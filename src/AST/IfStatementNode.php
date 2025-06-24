@@ -26,6 +26,10 @@ class IfStatementNode extends ASTNode
         $this->elseBody = $elseBody;
     }
 
+    /**
+     * @throws FehlerException
+     * @throws ReturnException
+     */
     public function evaluate(Environment $env): VoidValue
     {
 

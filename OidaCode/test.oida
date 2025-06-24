@@ -31,3 +31,13 @@ heast a = [3,4,5];
 
 schau(a isned [3,4,5,6]);
 }
+
+test ja(){
+
+heast x = mock("add") mit(12);
+
+schau(x gleich 12);
+}
+
+
+

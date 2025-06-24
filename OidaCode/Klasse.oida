@@ -19,7 +19,6 @@ klasse Car
          this:kmh = this:kmh plus betrag;
          speicher this:kmh;
         }
-
          }
 }
 

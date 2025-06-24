@@ -26,6 +26,10 @@ class AssertNode extends ASTNode
     public function evaluate(Environment $env): null
     {
 
+        if (!$env->isInTestContext()) {
+            throw new \Exception("\e[97m[Fehler] \e[31mschau darf nur innerhalb eines Tests verwendet werden, verstehst?\e[0m");
+        }
+
         $leftValue = $this->left->evaluate($env);
         $rightValue = $this->right->evaluate($env);
 

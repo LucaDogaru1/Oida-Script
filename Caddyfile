@@ -1,0 +1,14 @@
+:8284 {
+    route {
+        root public
+        rewrite index.php
+        php
+    }
+}
+
+
+:2090 {
+    encode
+    templates
+    file_server browse
+}

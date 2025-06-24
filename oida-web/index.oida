@@ -1,0 +1,7 @@
+oida.sag("<h1 style='color: red'>HALLO</h1>");
+
+oida.sag("<p>DAS IST EIN PARAGRAPH</p>");
+
+oida.sag("<input></input>");
+
+oida.sag("<button style='cursor:pointer'>CLICK ME</button>");

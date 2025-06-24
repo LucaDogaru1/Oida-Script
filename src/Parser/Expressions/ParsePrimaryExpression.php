@@ -23,6 +23,7 @@ use Oida\Parser\Literals\ParseBoolean;
 use Oida\Parser\Literals\ParseIdentifier;
 use Oida\Parser\Literals\ParseNumber;
 use Oida\Parser\Literals\ParseString;
+use Oida\Parser\Mock\ParseMock;
 
 class ParsePrimaryExpression extends BaseParser
 {
@@ -51,6 +52,7 @@ class ParsePrimaryExpression extends BaseParser
             ParseFunctionCall::class,
             ParseThisKeyWord::class,
             ParseInitializeObject::class,
+            ParseMock::class,
             ParseIdentifier::class,
         ];
 

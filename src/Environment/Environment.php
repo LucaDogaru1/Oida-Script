@@ -9,6 +9,7 @@ class Environment
 {
     private array $variables = [];
     private array $methods = [];
+    private array $mockedMethods = [];
     private array $classes = [];
     private array $classProperties = [];
 
@@ -20,6 +21,8 @@ class Environment
 
     private ?object $currentObject = null;
     private bool $inFunction = false;
+
+    private bool $inTestContext = false;
 
     public function __construct(?Environment $parent = null)
     {
@@ -129,7 +132,7 @@ class Environment
             return $this->parent->getClass($name);
         }
 
-        throw new Exception("Gibt es eine Klasse mit dem Namen  " . $name. " ?");
+        throw new Exception("Gibt es eine Klasse mit dem Namen  " . $name . " ?");
     }
 
     /**
@@ -139,6 +142,7 @@ class Environment
     {
         return $this->currentObject ?? null;
     }
+
     public function defineClassProperty(string $name, $value, $visibility): void
     {
         if ($this->parent !== null) {
@@ -189,7 +193,22 @@ class Environment
 
     public function methodExists(string $methodName): bool
     {
-        return isset($this->methods[$methodName]);
+
+        if (isset($this->methods[$methodName])) {
+            return true;
+        }
+
+        foreach ($this->classes as $class) {
+            foreach ($class['methods'] as $method) {
+                var_dump($method->getMethodName());
+                if($method->getMethodName() === $methodName){
+                    return true;
+                }
+            }
+
+        }
+
+        return $this->parent?->methodExists($methodName) ?? false;
     }
 
     public function hasVariable(string $name): bool
@@ -205,15 +224,18 @@ class Environment
         return false;
     }
 
-    public function enterConstructor(): void {
+    public function enterConstructor(): void
+    {
         $this->inConstructor = true;
     }
 
-    public function leaveConstructor(): void {
+    public function leaveConstructor(): void
+    {
         $this->inConstructor = false;
     }
 
-    public function isInConstructor(): bool {
+    public function isInConstructor(): bool
+    {
         return $this->inConstructor;
     }
 
@@ -242,6 +264,7 @@ class Environment
     {
         $this->inFunction = true;
     }
+
     public function inFunction(): bool
     {
         return $this->inFunction;
@@ -250,6 +273,50 @@ class Environment
     public function leaveFunction(): void
     {
         $this->inFunction = false;
+    }
+
+    public function enterTestContext(): void {
+        $this->inTestContext = true;
+    }
+
+    public function leaveTestContext(): void {
+        $this->inTestContext = false;
+    }
+
+    public function isInTestContext(): bool {
+        return $this->inTestContext;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setMockedMethod(string $name, $value): void
+    {
+        if(!$this->methodExists($name)) throw new Exception("wie willst du die methode $name Mocken wenn es die nichtmal gibt ???");
+
+        if ($this->parent !== null) {
+            $this->parent->setMockedMethod($name, $value);
+            return;
+        }
+
+        $this->mockedMethods[$name] = $value;
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function getMockedMethod(string $name)
+    {
+        if (isset($this->mockedMethods[$name])) {
+            return $this->mockedMethods[$name];
+        }
+
+        if ($this->parent !== null) {
+            return $this->parent->getMockedMethod($name);
+        }
+
+        throw new Exception("mock methode gibt es nicht $name");
     }
 
 
