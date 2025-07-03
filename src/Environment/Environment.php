@@ -200,7 +200,6 @@ class Environment
 
         foreach ($this->classes as $class) {
             foreach ($class['methods'] as $method) {
-                var_dump($method->getMethodName());
                 if($method->getMethodName() === $methodName){
                     return true;
                 }

@@ -23,7 +23,7 @@ class AssertNode extends ASTNode
     /**
      * @throws Exception
      */
-    public function evaluate(Environment $env): null
+    public function evaluate(Environment $env): mixed
     {
 
         if (!$env->isInTestContext()) {

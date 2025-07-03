@@ -29,7 +29,7 @@ use Oida\Environment\Environment;
     /**
      * @throws Exception
      */
-    public function evaluate(Environment $env): null
+    public function evaluate(Environment $env): mixed
     {
 
         $env->defineClass(

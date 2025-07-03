@@ -7,7 +7,7 @@ use Oida\Environment\Environment;
 class VoidValue extends ASTNode
 {
 
-    public function evaluate(Environment $env): null
+    public function evaluate(Environment $env): mixed
     {
         return null;
     }

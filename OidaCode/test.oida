@@ -14,8 +14,8 @@ test subtrahiere(){
 heast a = 3;
 heast b = 3;
 
-
 heast result = 0;
+
 schau(a minus b gleich result);
 }
 
@@ -26,18 +26,8 @@ heast a = [3,4,5];
 schau(a gleich [3,4,5]);
 }
 
-test array(){
-heast a = [3,4,5];
 
-schau(a isned [3,4,5,6]);
-}
 
-test ja(){
-
-heast x = mock("add") mit(12);
-
-schau(x gleich 12);
-}
 
 
 

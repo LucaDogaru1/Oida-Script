@@ -8,7 +8,7 @@ use Oida\Environment\Environment;
 class NullExpressionNode extends ASTNode
 {
 
-    public function evaluate(Environment $env): null
+    public function evaluate(Environment $env): mixed
     {
         return null;
     }
